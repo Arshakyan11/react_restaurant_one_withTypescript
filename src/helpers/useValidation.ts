@@ -1,4 +1,4 @@
-import { number, object, ref, string } from "yup";
+import { InferType, number, object, ref, string } from "yup";
 
 export const contactUsValidation = object({
   name: string()
@@ -22,6 +22,8 @@ export const contactUsValidation = object({
     .required("Pls write your message here"),
 });
 
+export type ContactUsValidationType = InferType<typeof contactUsValidation>;
+
 export const userRegistrationValidation = object({
   userName: string()
     .min(2, "Pls write more than 1 symbols")
@@ -42,6 +44,10 @@ export const userRegistrationValidation = object({
     .required("Pls repeat your passowrd"),
 });
 
+export type UserRegistrationValidationType = InferType<
+  typeof userRegistrationValidation
+>;
+
 export const userLoginValidation = object({
   email: string()
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
@@ -51,6 +57,8 @@ export const userLoginValidation = object({
     .max(16, "Write Maximum 16 symbols")
     .required("Pls Write Your Password"),
 });
+
+export type UserLoginValidationType = InferType<typeof userLoginValidation>;
 
 export const userReservationValidation = object({
   address: string().required("Choose Restaurant Address"),
@@ -63,6 +71,10 @@ export const userReservationValidation = object({
     .required("Choose how many people would come"),
   tableType: string().required("Choose Table Type"),
 });
+
+export type UserReservationValidationType = InferType<
+  typeof userReservationValidation
+>;
 
 export const userDataEditing = object({
   userEmail: string()
@@ -78,4 +90,4 @@ export const userDataEditing = object({
     .required("Pls Repeat Your New Passowrd"),
 });
 
-
+export type UserDataEditingType = InferType<typeof userDataEditing>;

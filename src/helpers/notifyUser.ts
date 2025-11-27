@@ -1,7 +1,7 @@
-import { Bounce, toast } from "react-toastify";
+import { Bounce, toast, ToastOptions } from "react-toastify";
 
-export const notifyForSMth = (mess) => {
-  toast(mess, {
+export const notifyForSMth = (mess: string) => {
+  const options: ToastOptions = {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -13,11 +13,12 @@ export const notifyForSMth = (mess) => {
     transition: Bounce,
     type: "success",
     className: "toastifyEditing",
-  });
+  };
+  toast(mess, options);
 };
 
-export const notifyForError = (mess) => {
-  toast(mess, {
+export const notifyForError = (mess: string) => {
+  const options: ToastOptions = {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -29,6 +30,6 @@ export const notifyForError = (mess) => {
     transition: Bounce,
     type: "error",
     className: "toastifyEditing",
-  });
+  };
+  toast(mess, options);
 };
-  
