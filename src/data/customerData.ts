@@ -8,8 +8,9 @@ import {
   customerImgWoman2,
   customerImgWoman3,
 } from "../components/Images";
+import { CustomersReviewType } from "../types";
 
-export const customerReview = [
+export const customerReview: CustomersReviewType[] = [
   {
     id: 1,
     nickname: "Emily Johnson",

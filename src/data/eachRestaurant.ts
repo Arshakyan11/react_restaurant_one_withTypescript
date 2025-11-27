@@ -13,15 +13,15 @@ import {
   yerRestImg3,
   yerRestImg4,
 } from "../components/Images";
+import { EachRestaurantType } from "../types";
 
-export const eachRestaurantData = [
+export const eachRestaurantData: EachRestaurantType[] = [
   {
     id: nanoid(2),
     location: "at Yerevan",
     address: "3 Amiryan Street, Yerevan 0010, Armenia",
     phone: "+374 10 123456",
     email: "erikarshakyan222@gmail.com",
-
     workingTime: "Working Time: Mon-Sun: 10:00 AM to 11:00 PM",
     city: "Yerevan",
     info: "Located in the lively center of Yerevan, just steps from Republic Square, our Armenia branch offers a warm and traditional atmosphere where culture and cuisine come together. Decorated with handcrafted woodwork and Armenian art, the restaurant serves time-honored dishes like khorovats, tolma, and fresh lavash from our tonir oven. Perfect for tourists and locals, Lavash Yerevan is the ideal place to experience authentic Armenian hospitality, flavors, and music in one unforgettable meal.",

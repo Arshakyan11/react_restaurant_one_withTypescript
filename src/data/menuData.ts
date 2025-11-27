@@ -1,6 +1,13 @@
-export const mealTime = ["BreakFast", "Brunch", "Lunch", "Dinner"];
+import { CategoriesType, priceChangesType } from "../types";
 
-export const topCategories = [
+export const mealTime: CategoriesType = [
+  "BreakFast",
+  "Brunch",
+  "Lunch",
+  "Dinner",
+];
+
+export const topCategories: CategoriesType = [
   "sushi",
   "pizza",
   "soups",
@@ -10,9 +17,13 @@ export const topCategories = [
   "burger",
   "salads",
 ];
-export const dessertsAndDrinks = ["cake", "milkshakes", "lemonade"];
+export const dessertsAndDrinks: CategoriesType = [
+  "cake",
+  "milkshakes",
+  "lemonade",
+];
 
-export const priceRanges = [
+export const priceRanges: priceChangesType[] = [
   { label: "up to 5$", min: 0, max: 5 },
   { label: "6$ - 10$", min: 6, max: 10 },
   { label: "11$ - 20$", min: 11, max: 20 },

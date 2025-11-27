@@ -15,8 +15,9 @@ import {
   chiefImg14,
   chiefImg15,
 } from "../components/Images";
+import { RestaurantChefsType } from "../types";
 
-export const restaurantChefs = [
+export const restaurantChefs: RestaurantChefsType[] = [
   {
     name: "Gordon Ramsay",
     position: "Head Chef",

@@ -9,7 +9,8 @@ import {
   img8,
   img9,
 } from "../components/Images";
-export const cuisines = [
+import { CuisinesType } from "../types";
+export const cuisines: CuisinesType[] = [
   {
     cuisine: "Italy",
     img: img1,
