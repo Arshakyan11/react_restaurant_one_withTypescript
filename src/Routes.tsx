@@ -14,4 +14,6 @@ export const ROUTES = {
   PROFILERESERVEDATE: "reserveDate",
   PROFILEWISHLIST: "wishlist",
   NOTFOUND: "*",
-};
+} as const;
+
+type RouteValues = (typeof ROUTES)[keyof typeof ROUTES];

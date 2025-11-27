@@ -10,6 +10,10 @@ export interface ContactFormValuesTypes {
   message: string;
 }
 
+export interface ContactFormValuesWithId extends ContactFormValuesTypes {
+  id: string;
+}
+
 export interface CreateUserDataType {
   userName: string;
   phoneNum: string;

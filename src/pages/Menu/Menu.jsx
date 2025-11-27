@@ -231,7 +231,7 @@ const Menu = () => {
                           <h2>{each.label}</h2>
                           <div className={styles.stars}>
                             <div className={styles.onlyStars}>
-                              {each.starCount?.map((_, i) => {
+                              {each.starrArr?.map((_, i) => {
                                 return (
                                   <img key={i} src={starRating} alt="star" />
                                 );

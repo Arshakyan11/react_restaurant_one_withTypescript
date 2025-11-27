@@ -61,7 +61,7 @@ const Search = () => {
                       <div className={styles.stars}>
                         <span>Rate:</span>
                         <div className={styles.mainStars}>
-                          {each.starCountArr.map((_, i) => {
+                          {each.starrArr.map((_, i) => {
                             return <img key={i} src={starRating} alt="star" />;
                           })}
                         </div>
