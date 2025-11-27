@@ -26,7 +26,7 @@ const ContactUs = () => {
             hello, our team is here to help. At our restaurant, we value every
             guest and believe communication is the key to great service.
           </p>
-          <Formik 
+          <Formik
             initialValues={initialValues}
             validationSchema={contactUsValidation}
             onSubmit={(e, form) => createDataContact(e, form, dispatch)}

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./ProfileWishList.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { getallWatchlistInfo } from "../../../store/WishlistSlice/WishlistSlice";
 import {
   changingCountOfItem,
   deleteWishListFromData,

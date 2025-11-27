@@ -8,8 +8,23 @@ import {
   updatingProfileInformation,
 } from "../store/api/api";
 import { ROUTES } from "../Routes";
+import { AppDispatch } from "../store/store";
+import {
+  CheckUserSendingDataType,
+  ContactFormValuesTypes,
+  CreateUserDataType,
+  FormHelpers,
+  ReserveTableInfoType,
+  SendingWatchListTyoe,
+  UpdateDataOnProfileType,
+} from "../types/formTypes";
+import { NavigateFunction } from "react-router-dom";
 
-export const createDataContact = (e, form, dispatch) => {
+export const createDataContact = (
+  e: ContactFormValuesTypes,
+  form: FormHelpers,
+  dispatch: AppDispatch
+) => {
   const { name, lastname, email, subject, message } = e;
   const data = {
     id: nanoid(3),
@@ -23,7 +38,12 @@ export const createDataContact = (e, form, dispatch) => {
   form.resetForm();
 };
 
-export const createUserData = (event, form, dispatch, navigate) => {
+export const createUserData = (
+  event: CreateUserDataType,
+  form: FormHelpers,
+  dispatch: AppDispatch,
+  navigate: NavigateFunction
+) => {
   const { userName, phoneNum, email, password } = event;
   const data = {
     id: nanoid(7),
@@ -39,7 +59,11 @@ export const createUserData = (event, form, dispatch, navigate) => {
   form.resetForm();
 };
 
-export const checkUserSendingData = (event, form, dispatch, navigate) => {
+export const checkUserSendingData = (
+  event: CheckUserSendingDataType,
+  dispatch: AppDispatch,
+  navigate: NavigateFunction
+) => {
   const { email, password } = event;
   const data = {
     email,
@@ -49,17 +73,28 @@ export const checkUserSendingData = (event, form, dispatch, navigate) => {
   dispatch(checkingUserExisting({ data, dispatch }));
 };
 
-export const reserveTableInfo = (event, form, dispatch) => {
+export const reserveTableInfo = (
+  event: ReserveTableInfoType,
+  form: FormHelpers,
+  dispatch: AppDispatch
+) => {
   dispatch(addingReserveTable(event));
   form.resetForm();
 };
 
-export const updateDataOnProfile = (event, form, dispatch) => {
+export const updateDataOnProfile = (
+  event: UpdateDataOnProfileType,
+  form: FormHelpers,
+  dispatch: AppDispatch
+) => {
   dispatch(updatingProfileInformation(event));
   form.resetForm();
 };
 
-export const sendingWatchList = (dispatch, item) => {
+export const sendingWatchList = (
+  dispatch: AppDispatch,
+  item: SendingWatchListTyoe
+) => {
   dispatch(
     addingWishlistToData({
       id: item.mealId,

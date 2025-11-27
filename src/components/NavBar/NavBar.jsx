@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./NavBar.scss";
-import { logo, logo1 } from "../Images";
+import { logo } from "../Images";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import { FaAddressCard, FaBars, FaUser } from "react-icons/fa";
 import { FaRightToBracket } from "react-icons/fa6";
-import { LogOutFromAccount } from "../../helpers/logOut";
+import { LogOutFromAccount } from "../../helpers/logOut.ts";
 
 const NavBar = () => {
   const dropDownRef = useRef();

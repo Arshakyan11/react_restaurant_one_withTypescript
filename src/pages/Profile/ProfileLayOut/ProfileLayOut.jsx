@@ -1,8 +1,6 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import { ROUTES } from "../../../Routes";
+import { Outlet } from "react-router-dom";
 import ProfileNav from "../ProfileNav/ProfileNav";
-import LayOut from "../../../LayOut/LayOut";
 import styles from "./ProfileLayOut.module.scss";
 const ProfileLayOut = () => {
   return (

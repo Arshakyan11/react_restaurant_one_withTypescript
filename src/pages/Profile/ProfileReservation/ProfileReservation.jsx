@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
 import { useDispatch, useSelector } from "react-redux";
 import { deletingReservationTime } from "../../../store/api/api";
-import { getAllReservationInfo } from "../../../store/ReservationSlice/ReservationSlice";
 import Aos from "aos";
 import { getUserInfo } from "../../../store/AuthSlice/AuthSlice";
 

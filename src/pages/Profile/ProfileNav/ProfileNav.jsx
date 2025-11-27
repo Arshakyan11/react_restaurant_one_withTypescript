@@ -3,7 +3,7 @@ import "./ProfileNav.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
 import { FaUser } from "react-icons/fa";
-import { LogOutFromAccount } from "../../../helpers/logOut";
+import { LogOutFromAccount } from "../../../helpers/logOut.ts";
 import { FaRightToBracket } from "react-icons/fa6";
 const ProfileNav = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];

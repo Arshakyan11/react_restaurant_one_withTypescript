@@ -5,7 +5,6 @@ import {
   reserveImg1,
   reserveImg2,
   reserveImg3,
-  starRating,
   welcomeImg,
 } from "../../components/Images";
 import { Link } from "react-router-dom";
