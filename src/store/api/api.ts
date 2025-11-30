@@ -11,8 +11,17 @@ import {
   DataOfSearchingMenuType,
   EdamamHit,
   EdamamHitForSearch,
+  UserInfoType,
+  WishList,
 } from "../../types/apiHandlingTypes";
-import { ContactFormValuesWithId } from "../../types/formTypes";
+import {
+  CheckingUserType,
+  ContactFormValuesWithId,
+  CreateUserDataTypeWithId,
+  ReserveTableInfoType,
+  UpdateDataOnProfileType,
+} from "../../types/formTypes";
+import { AppDispatch } from "../store";
 
 const instant = axios.create({
   timeoutErrorMessage: "Error 404",
@@ -41,6 +50,12 @@ function spreedPropertiesWidely(elm: EdamamHitForSearch) {
     dietLabels: elm.recipe.dietLabels,
     mealType: elm.recipe.mealType,
   };
+}
+
+function getLocalUserStrict(): UserInfoType {
+  let strSData = localStorage.getItem("userInfo");
+  if (!strSData) throw new Error("Not Logged In");
+  return JSON.parse(strSData);
 }
 
 const localStorageContacts = axios.create({
@@ -149,187 +164,205 @@ const localStorageUsers = axios.create({
   timeoutErrorMessage: "Too much time for fetching data",
 });
 
-// const setingLocalStorageUserinfo = (dispatch, data) => {
-//   localStorage.setItem("userInfo", JSON.stringify(data));
-//   dispatch(setUserInfo(data));
-// };
-// const patchingUserDataToLocal = (id, data) => {
-//   console.log(data, id);
-//   return axios.patch(`http://localhost:8000/users/${id}`, data, {
-//     timeout: 10000,
-//     timeoutErrorMessage: "Too much time for fetching data",
-//   });
-// };
+const setingLocalStorageUserinfo = (
+  dispatch: AppDispatch,
+  data: UserInfoType
+) => {
+  localStorage.setItem("userInfo", JSON.stringify(data));
+  dispatch(setUserInfo(data));
+};
 
-// export const creatingUserData = createAsyncThunk(
-//   "registration/creatingUserData",
-//   (arg, { rejectWithValue }) => {
-//     try {
-//       localStorageUsers({ method: "POST", data: arg });
-//       notifyForSMth("Account Registered Successfuly");
-//       return "Success";
-//     } catch (error) {
-//       return rejectWithValue("Cant Add User to list, PLs try again later");
-//     }
-//   }
-// );
+const patchingUserDataToLocal = (id: string, data: Partial<UserInfoType>) => {
+  return axios.patch(`http://localhost:8000/users/${id}`, data, {
+    timeout: 10000,
+    timeoutErrorMessage: "Too much time for fetching data",
+  });
+};
 
-// export const checkingUserExisting = createAsyncThunk(
-//   "login/checkingUserExisting",
-//   async ({ data, dispatch }, { rejectWithValue }) => {
-//     try {
-//       const { email, password, navigate } = data;
-//       const response = await localStorageUsers({ method: "GET" }).then(
-//         (res) => res.data
-//       );
-//       const lastResult = await response.find(
-//         (elm) => elm.email === email && elm.password === password
-//       );
-//       if (lastResult) {
-//         localStorage.setItem("userInfo", JSON.stringify(lastResult));
-//         await dispatch(setEmailManualy(email));
-//         await dispatch(setUserInfoManualy(lastResult));
-//         dispatch(setUserInfo(lastResult));
-//         notifyForSMth("You Logged In");
-//         navigate(ROUTES.HOME);
-//         return true;
-//       } else {
-//         notifyForError("User not found");
-//         return false;
-//       }
-//     } catch (error) {
-//       return rejectWithValue("Error While Checking User");
-//     }
-//   }
-// );
+export const creatingUserData = createAsyncThunk<
+  string,
+  CreateUserDataTypeWithId,
+  { rejectValue: string }
+>("registration/creatingUserData", async (arg, { rejectWithValue }) => {
+  try {
+    await localStorageUsers({ method: "POST", data: arg });
+    notifyForSMth("Account Registered Successfuly");
+    return "Success";
+  } catch (error) {
+    return rejectWithValue("Cant Add User to list, PLs try again later");
+  }
+});
 
-// export const addingReserveTable = createAsyncThunk(
-//   "reservation/addingReserveTable",
-//   async (obj, { dispatch, rejectWithValue }) => {
-//     try {
-//       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       const response = await localStorageUsers().then((res) => res.data);
-//       const findedUser = await response.find(
-//         (elm) => elm.id === userInfo.id && !elm.reservation
-//       );
-//       if (findedUser) {
-//         const reservation = {
-//           reservation: obj,
-//         };
-//         patchingUserDataToLocal(`${findedUser["id"]}`, reservation);
-//         const updatedData = {
-//           ...userInfo,
-//           reservation: obj,
-//         };
-//         setingLocalStorageUserinfo(dispatch, updatedData);
-//         notifyForSMth("Reservation passed Successfuly");
-//         return updatedData;
-//       } else {
-//         notifyForError(
-//           "You have already had reservation, Go to Profile for concelation"
-//         );
-//         return false;
-//       }
-//     } catch (error) {
-//       return rejectWithValue("Error 404");
-//     }
-//   }
-// );
+export const checkingUserExisting = createAsyncThunk<
+  boolean,
+  CheckingUserType,
+  { rejectValue: string }
+>("login/checkingUserExisting", async (data, { rejectWithValue, dispatch }) => {
+  try {
+    const { email, password, navigate } = data;
+    const res = await localStorageUsers({
+      method: "GET",
+    });
+    const response: UserInfoType[] = res.data;
+    const lastResult = response.find(
+      (elm) => elm.email === email && elm.password === password
+    );
+    if (lastResult) {
+      localStorage.setItem("userInfo", JSON.stringify(lastResult));
+      dispatch(setEmailManualy(email));
+      dispatch(setUserInfoManualy(lastResult));
+      dispatch(setUserInfo(lastResult));
+      notifyForSMth("You Logged In");
+      navigate(ROUTES.HOME);
+      return true;
+    } else {
+      notifyForError("User not found");
+      return false;
+    }
+  } catch (error) {
+    return rejectWithValue("Error While Checking User");
+  }
+});
 
-// export const deletingReservationTime = createAsyncThunk(
-//   "reservation/deletingReservationTime",
-//   async (_, { dispatch, rejectWithValue }) => {
-//     try {
-//       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       const response = await localStorageUsers({ url: userInfo.id }).then(
-//         (res) => {
-//           delete res.data.reservation;
-//           return res.data;
-//         }
-//       );
-//       localStorageUsers({
-//         method: "PUT",
-//         data: response,
-//         url: userInfo.id,
-//       });
-//       localStorage.setItem("userInfo", JSON.stringify(response));
-//       dispatch(setUserInfo(response));
-//       notifyForSMth("Reservation deleted successfuly");
-//       return response;
-//     } catch (error) {
-//       return rejectWithValue("Error while deleting Reservation");
-//     }
-//   }
-// );
+export const addingReserveTable = createAsyncThunk<
+  { success: boolean; data?: UserInfoType },
+  ReserveTableInfoType,
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "reservation/addingReserveTable",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      const response = await localStorageUsers
+        .get<UserInfoType[]>("/")
+        .then((res) => res.data);
+      const findedUser = response.find(
+        (elm) => elm.id === userInfo.id && !elm.reservation
+      );
+      if (findedUser) {
+        const reservation = {
+          reservation: obj,
+        };
+        patchingUserDataToLocal(`${findedUser["id"]}`, reservation);
+        const updatedData = {
+          ...userInfo,
+          reservation: obj,
+        };
+        setingLocalStorageUserinfo(dispatch, updatedData);
+        notifyForSMth("Reservation passed Successfuly");
+        return { success: true, data: updatedData };
+      } else {
+        notifyForError(
+          "You have already had reservation, Go to Profile for concelation"
+        );
+        return { success: false };
+      }
+    } catch (error) {
+      return rejectWithValue("Error 404");
+    }
+  }
+);
 
-// export const updatingProfileInformation = createAsyncThunk(
-//   "profile/updatingProfileInformation",
-//   async (data, { dispatch, rejectWithValue }) => {
-//     try {
-//       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       if (
-//         data.userOldPass === userInfo.password &&
-//         userInfo.password !== data.userNewPass
-//       ) {
-//         patchingUserDataToLocal(userInfo.id, {
-//           password: data.userNewPass,
-//         });
-//         userInfo.password = data.userNewPass;
-//         setingLocalStorageUserinfo(dispatch, userInfo);
-//         notifyForSMth("Password Changed Successfuly");
-//       } else if (
-//         data.userOldPass === userInfo.password &&
-//         userInfo.password === data.userNewPass
-//       ) {
-//         notifyForError("Password must be different from your current password");
-//       } else {
-//         notifyForError("The current password is incorrect");
-//       }
-//     } catch (error) {
-//       return rejectWithValue("Error 404");
-//     }
-//   }
-// );
+export const deletingReservationTime = createAsyncThunk<
+  UserInfoType,
+  void,
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "reservation/deletingReservationTime",
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      const { data } = await localStorageUsers.get<UserInfoType>(
+        `/${userInfo.id}`
+      );
 
-// export const addingWishlistToData = createAsyncThunk(
-//   "wishlist/addingWishlistToData",
-//   async (wishObj, { dispatch, rejectWithValue }) => {
-//     try {
-//       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       const checkingExistingMeal = await localStorageUsers({
-//         method: "GET",
-//         url: userInfo.id,
-//       }).then((res) => res.data?.wishList);
-//       const isExisting = checkingExistingMeal.find(
-//         (elm) => elm.name === wishObj.name && elm.calories === wishObj.calories
-//       );
+      const updatedData: UserInfoType = { ...data };
+      delete updatedData.reservation;
+      await localStorageUsers.put(`/${userInfo.id}`, updatedData);
+      localStorage.setItem("userInfo", JSON.stringify(updatedData));
+      dispatch(setUserInfo(updatedData));
+      notifyForSMth("Reservation deleted successfuly");
+      return updatedData;
+    } catch (error) {
+      return rejectWithValue("Error while deleting Reservation");
+    }
+  }
+);
 
-//       if (!isExisting) {
-//         const updatedWishlist = [...(userInfo.wishList || []), wishObj];
-//         let totalCount = updatedWishlist.reduce(
-//           (acc, elm) => acc + +elm.price,
-//           0
-//         );
-//         const newUserInfo = {
-//           wishList: updatedWishlist,
-//           totalCheckPrice: totalCount.toFixed(3),
-//         };
-//         patchingUserDataToLocal(userInfo.id, newUserInfo);
-//         setingLocalStorageUserinfo(dispatch, {
-//           ...userInfo,
-//           ...newUserInfo,
-//         });
-//         notifyForSMth("Successfully added to Cart");
-//         return updatedWishlist;
-//       } else {
-//         notifyForError("Item is already on wishlist!");
-//         return userInfo.wishList;
-//       }
-//     } catch (error) {
-//       return rejectWithValue("Error while adding Wishlist");
-//     }
-//   }
-// );
+export const updatingProfileInformation = createAsyncThunk<
+  void,
+  UpdateDataOnProfileType,
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "profile/updatingProfileInformation",
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      if (
+        data.userOldPass === userInfo.password &&
+        userInfo.password !== data.userNewPass
+      ) {
+        patchingUserDataToLocal(userInfo.id, {
+          password: data.userNewPass,
+        });
+        userInfo.password = data.userNewPass;
+        setingLocalStorageUserinfo(dispatch, userInfo);
+        notifyForSMth("Password Changed Successfuly");
+      } else if (
+        data.userOldPass === userInfo.password &&
+        userInfo.password === data.userNewPass
+      ) {
+        notifyForError("Password must be different from your current password");
+      } else {
+        notifyForError("The current password is incorrect");
+      }
+    } catch (error) {
+      return rejectWithValue("Error 404");
+    }
+  }
+);
+
+export const addingWishlistToData = createAsyncThunk<
+  WishList[],
+  WishList,
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "wishlist/addingWishlistToData",
+  async (wishObj, { dispatch, rejectWithValue }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      const checkingExistingMeal = await localStorageUsers
+        .get<UserInfoType>(`/${userInfo.id}`)
+        .then((res) => res.data?.wishList);
+      const isExisting = checkingExistingMeal.find(
+        (elm) => elm.name === wishObj.name && elm.calories === wishObj.calories
+      );
+      if (!isExisting) {
+        const updatedWishlist = [...(userInfo.wishList || []), wishObj];
+        let totalCount = updatedWishlist.reduce(
+          (acc, elm) => acc + +elm.price,
+          0
+        );
+        const newUserInfo = {
+          wishList: updatedWishlist,
+          totalCheckPrice: totalCount.toFixed(3),
+        };
+        patchingUserDataToLocal(userInfo.id, newUserInfo);
+        setingLocalStorageUserinfo(dispatch, {
+          ...userInfo,
+          ...newUserInfo,
+        });
+        notifyForSMth("Successfully added to Cart");
+        return updatedWishlist;
+      } else {
+        notifyForError("Item is already on wishlist!");
+        return userInfo.wishList;
+      }
+    } catch (error) {
+      return rejectWithValue("Error while adding Wishlist");
+    }
+  }
+);
 
 // export const deleteWishListFromData = createAsyncThunk(
 //   "wishlist/deleteWishListFromData",

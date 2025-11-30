@@ -19,6 +19,7 @@ import {
   UpdateDataOnProfileType,
 } from "../types/formTypes";
 import { NavigateFunction } from "react-router-dom";
+import { WishList } from "../types";
 
 export const createDataContact = (
   e: ContactFormValuesTypes,
@@ -44,14 +45,14 @@ export const createUserData = (
   dispatch: AppDispatch,
   navigate: NavigateFunction
 ) => {
-  const { userName, phoneNum, email, password } = event;
+  const { userName, phoneNumber, email, password } = event;
   const data = {
     id: nanoid(7),
     userName,
-    phoneNumber: phoneNum,
+    phoneNumber,
     email,
     password,
-    wishList: [],
+    wishList: [] as WishList[],
     totalCheckPrice: "0.000",
   };
   navigate(`/${ROUTES.LOGIN}`);
@@ -70,7 +71,7 @@ export const checkUserSendingData = (
     password,
     navigate,
   };
-  dispatch(checkingUserExisting({ data, dispatch }));
+  dispatch(checkingUserExisting(data));
 };
 
 export const reserveTableInfo = (
@@ -99,9 +100,9 @@ export const sendingWatchList = (
     addingWishlistToData({
       id: item.mealId,
       name: item.label,
-      img: item.images?.REGULAR.url,
       price: item.price,
       calories: item.calories,
+      img: item.images?.REGULAR.url,
       count: 1,
     })
   );

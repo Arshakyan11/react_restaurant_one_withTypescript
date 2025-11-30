@@ -34,3 +34,29 @@ export type DataOfSearchingMenuType = Pick<
   "cuisineType" | "dietLabels" | "mealType" | "calories" | "totalWeight"
 > &
   DataOflittleMenuType;
+
+export interface WishList {
+  id: string;
+  img: string;
+  name: string;
+  price: string;
+  count: number;
+  calories: number;
+}
+
+export interface ReservationType {
+  address: string;
+  date: string;
+  count: string;
+  tableType: string;
+}
+export interface UserInfoType {
+  email: string;
+  id: string;
+  password: string;
+  phoneNumber: string;
+  totalCheckPrice: string;
+  userName: string;
+  wishList: WishList[];
+  reservation?: ReservationType;
+}

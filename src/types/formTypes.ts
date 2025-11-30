@@ -1,3 +1,6 @@
+import { NavigateFunction } from "react-router-dom";
+import { WishList } from "./apiHandlingTypes";
+
 export interface FormHelpers {
   resetForm: () => void;
 }
@@ -16,9 +19,15 @@ export interface ContactFormValuesWithId extends ContactFormValuesTypes {
 
 export interface CreateUserDataType {
   userName: string;
-  phoneNum: string;
+  phoneNumber: string;
   email: string;
   password: string;
+}
+
+export interface CreateUserDataTypeWithId extends CreateUserDataType {
+  id: string;
+  totalCheckPrice: string;
+  wishList: WishList[];
 }
 
 export interface CheckUserSendingDataType {
@@ -44,3 +53,9 @@ export interface SendingWatchListTyoe {
   mealId: string;
   label: string;
 } //  ??????????????
+
+export interface CheckingUserType {
+  email: string;
+  password: string;
+  navigate: NavigateFunction;
+}

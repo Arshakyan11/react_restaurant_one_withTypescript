@@ -29,7 +29,7 @@ export const userRegistrationValidation = object({
     .min(2, "Pls write more than 1 symbols")
     .max(16, "Pls write less than 16 symbols")
     .required("Pls write Name"),
-  phoneNum: string()
+  phoneNumber: string()
     .matches(/^\+[0-9]{11}$/, "Pls enter valid phone Number")
     .required("Pls write Your phone Number"),
   email: string()

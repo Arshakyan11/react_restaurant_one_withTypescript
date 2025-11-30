@@ -45,10 +45,10 @@ const Registration = () => {
                 </fieldset>
                 <fieldset>
                   <legend>
-                    <ErrorMessage name="phoneNum" component="div" />
+                    <ErrorMessage name="phoneNumber" component="div" />
                   </legend>
                   <Field
-                    name="phoneNum"
+                    name="phoneNumber"
                     placeholder="Phone Number"
                     type="text"
                   />

@@ -9,7 +9,7 @@ const RegistrationSlice = createSlice({
     succesMessage: null,
     initialValues: {
       userName: "",
-      phoneNum: "",
+      phoneNumber: "",
       email: "",
       password: "",
       repeatedpassword: "",
