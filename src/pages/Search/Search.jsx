@@ -10,7 +10,7 @@ import { nanoid } from "nanoid";
 import { starRating } from "../../components/Images";
 import Aos from "aos";
 import { notifyForError } from "../../helpers/notifyUser";
-import { sendingWatchList } from "../../helpers/sendData";
+import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 import BuyingItemsList from "../../components/BuyingItemsList/BuyingItemsList";
 const Search = () => {
   const dispatch = useDispatch();
@@ -87,7 +87,10 @@ const Search = () => {
                         {userInfo ? (
                           <button
                             onClick={() => {
-                              sendingWatchList(dispatch, each);
+                              sendingWatchList(
+                                dispatch,
+                                sendWishListData(each)
+                              );
                             }}
                           >
                             Add to Cart

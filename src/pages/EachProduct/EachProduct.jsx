@@ -5,7 +5,7 @@ import { ROUTES } from "../../Routes";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { notifyForError } from "../../helpers/notifyUser";
-import { sendingWatchList } from "../../helpers/sendData";
+import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 const EachProduct = () => {
   const { data } = useLocation().state;
   const userInfo = localStorage.getItem("userInfo");
@@ -60,7 +60,7 @@ const EachProduct = () => {
               {userInfo ? (
                 <button
                   onClick={() => {
-                    sendingWatchList(dispatch, mealObj);
+                    sendingWatchList(dispatch, sendWishListData(mealObj));
                   }}
                 >
                   Order Now <FaCartShopping />

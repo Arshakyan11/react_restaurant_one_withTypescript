@@ -15,11 +15,10 @@ import {
   CreateUserDataType,
   FormHelpers,
   ReserveTableInfoType,
-  SendingWatchListTyoe,
   UpdateDataOnProfileType,
 } from "../types/formTypes";
 import { NavigateFunction } from "react-router-dom";
-import { WishList } from "../types";
+import { EdamamHitForWishListSedningType, WishList } from "../types";
 
 export const createDataContact = (
   e: ContactFormValuesTypes,
@@ -92,18 +91,17 @@ export const updateDataOnProfile = (
   form.resetForm();
 };
 
-export const sendingWatchList = (
-  dispatch: AppDispatch,
-  item: SendingWatchListTyoe
-) => {
-  dispatch(
-    addingWishlistToData({
-      id: item.mealId,
-      name: item.label,
-      price: item.price,
-      calories: item.calories,
-      img: item.images?.REGULAR.url,
-      count: 1,
-    })
-  );
+export const sendWishListData = (
+  item: EdamamHitForWishListSedningType
+): WishList => ({
+  id: item.mealId,
+  name: item.label,
+  price: item.price,
+  calories: item.calories,
+  img: item.images.REGULAR.url,
+  count: 1,
+});
+
+export const sendingWatchList = (dispatch: AppDispatch, item: WishList) => {
+  dispatch(addingWishlistToData(item));
 };

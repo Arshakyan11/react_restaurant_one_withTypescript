@@ -29,6 +29,19 @@ export interface DataOflittleMenuType {
   image?: string;
 }
 
+export interface EdamamHitForWishListSedningType {
+  mealId: string;
+  label: string;
+  price: string;
+  calories: number;
+  count: number;
+  images: {
+    REGULAR: {
+      url: string;
+    };
+  };
+}
+
 export type DataOfSearchingMenuType = Pick<
   EdamamHitForSearch["recipe"],
   "cuisineType" | "dietLabels" | "mealType" | "calories" | "totalWeight"

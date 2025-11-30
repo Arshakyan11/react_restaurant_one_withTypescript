@@ -63,7 +63,6 @@ const localStorageContacts = axios.create({
   timeout: 10000,
   baseURL: "http://localhost:8000/usersMessage",
 });
-
 export const fetchingLittleMenu = createAsyncThunk<
   DataOflittleMenuType[],
   string,
@@ -333,21 +332,21 @@ export const addingWishlistToData = createAsyncThunk<
       const userInfo = getLocalUserStrict();
       const checkingExistingMeal = await localStorageUsers
         .get<UserInfoType>(`/${userInfo.id}`)
-        .then((res) => res.data?.wishList);
+        .then((res) => res.data?.wishList || []);
       const isExisting = checkingExistingMeal.find(
         (elm) => elm.name === wishObj.name && elm.calories === wishObj.calories
       );
       if (!isExisting) {
         const updatedWishlist = [...(userInfo.wishList || []), wishObj];
         let totalCount = updatedWishlist.reduce(
-          (acc, elm) => acc + +elm.price,
+          (acc, elm) => acc + parseFloat(elm.price),
           0
         );
         const newUserInfo = {
           wishList: updatedWishlist,
           totalCheckPrice: totalCount.toFixed(3),
         };
-        patchingUserDataToLocal(userInfo.id, newUserInfo);
+        await patchingUserDataToLocal(userInfo.id, newUserInfo);
         setingLocalStorageUserinfo(dispatch, {
           ...userInfo,
           ...newUserInfo,
@@ -364,76 +363,82 @@ export const addingWishlistToData = createAsyncThunk<
   }
 );
 
-// export const deleteWishListFromData = createAsyncThunk(
-//   "wishlist/deleteWishListFromData",
-//   async (mealId, { dispatch, rejectWithValue }) => {
-//     try {
-//       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       const response = await localStorageUsers({
-//         method: "GET",
-//         url: userInfo.id,
-//       }).then((res) => {
-//         return res.data;
-//       });
-//       const newWishList = response.wishList.filter((elm) => elm.id !== mealId);
-//       let totalCount = newWishList.reduce(
-//         (acc, elm) => acc + +elm.price * +elm.count,
-//         0
-//       );
-//       const newUserInfo = {
-//         wishList: newWishList,
-//         totalCheckPrice: totalCount.toFixed(3),
-//       };
-//       patchingUserDataToLocal(userInfo.id, newUserInfo);
-//       setingLocalStorageUserinfo(dispatch, {
-//         ...userInfo,
-//         ...newUserInfo,
-//       });
-//       notifyForError("Item Removed from Wishlist");
-//       return newWishList;
-//     } catch (error) {
-//       return rejectWithValue("Error wFhile deleting data from WatchList");
-//     }
-//   }
-// );
+export const deleteWishListFromData = createAsyncThunk<
+  WishList[],
+  string,
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "wishlist/deleteWishListFromData",
+  async (mealId, { dispatch, rejectWithValue }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      const response = await localStorageUsers
+        .get<UserInfoType>(`/${userInfo.id}`)
+        .then((res) => {
+          return res.data;
+        });
+      const newWishList = response.wishList.filter((elm) => elm.id !== mealId);
+      let totalCount = newWishList.reduce(
+        (acc, elm) => acc + +elm.price * +elm.count,
+        0
+      );
+      const newUserInfo = {
+        wishList: newWishList,
+        totalCheckPrice: totalCount.toFixed(3),
+      };
+      await patchingUserDataToLocal(userInfo.id, newUserInfo);
+      setingLocalStorageUserinfo(dispatch, {
+        ...userInfo,
+        ...newUserInfo,
+      });
+      notifyForError("Item Removed from Wishlist");
+      return newWishList;
+    } catch (error) {
+      return rejectWithValue("Error wFhile deleting data from WatchList");
+    }
+  }
+);
 
-// export const changingCountOfItem = createAsyncThunk(
-//   "miniBuyingList/changingCountOfItem",
-//   async ({ mealId, type }, { dispatch, rejectWithValue }) => {
-//     try {
-//       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-//       const response = await localStorageUsers({
-//         method: "GET",
-//         url: userInfo.id,
-//       }).then((res) => {
-//         return res.data.wishList;
-//       });
-//       const result = await response.map((elm) => {
-//         if (
-//           elm.id === mealId &&
-//           elm.count + type > 0 &&
-//           elm.count + type <= 10
-//         ) {
-//           elm.count += +type;
-//         }
-//         return elm;
-//       });
-//       let totalCount = result.reduce(
-//         (acc, elm) => acc + +elm.price * +elm.count,
-//         0
-//       );
-//       let newUserInfo = {
-//         wishList: result,
-//         totalCheckPrice: totalCount.toFixed(3),
-//       };
-//       patchingUserDataToLocal(userInfo.id, newUserInfo);
-//       setingLocalStorageUserinfo(dispatch, {
-//         ...userInfo,
-//         ...newUserInfo,
-//       });
-//       return "Success";
-//     } catch (error) {
-//       return rejectWithValue("Error Happened while  changing Count");
-//     }
-//   }
-// );
+export const changingCountOfItem = createAsyncThunk<
+  string,
+  { mealId: string; type: number },
+  { rejectValue: string; dispatch: AppDispatch }
+>(
+  "miniBuyingList/changingCountOfItem",
+  async ({ mealId, type }, { dispatch, rejectWithValue }) => {
+    try {
+      const userInfo = getLocalUserStrict();
+      const response = await localStorageUsers
+        .get<UserInfoType>(`/${userInfo.id}`)
+        .then((res) => {
+          return res.data.wishList;
+        });
+      const result = response.map((elm) => {
+        if (
+          elm.id === mealId &&
+          elm.count + type > 0 &&
+          elm.count + type <= 10
+        ) {
+          elm.count += +type;
+        }
+        return elm;
+      });
+      let totalCount = result.reduce(
+        (acc, elm) => acc + parseFloat(elm.price) * +elm.count,
+        0
+      );
+      let newUserInfo = {
+        wishList: result,
+        totalCheckPrice: totalCount.toFixed(3),
+      };
+      await patchingUserDataToLocal(userInfo.id, newUserInfo);
+      setingLocalStorageUserinfo(dispatch, {
+        ...userInfo,
+        ...newUserInfo,
+      });
+      return "Success";
+    } catch (error) {
+      return rejectWithValue("Error Happened while  changing Count");
+    }
+  }
+);

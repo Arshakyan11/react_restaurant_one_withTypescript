@@ -49,11 +49,6 @@ export interface UpdateDataOnProfileType {
   userNewPassRepeat: string;
 }
 
-export interface SendingWatchListTyoe {
-  mealId: string;
-  label: string;
-} //  ??????????????
-
 export interface CheckingUserType {
   email: string;
   password: string;

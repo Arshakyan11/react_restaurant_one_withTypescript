@@ -15,7 +15,7 @@ import {
 } from "../../store/PaginationSlice/paginationSlice";
 import Aos from "aos";
 import { notifyForError } from "../../helpers/notifyUser";
-import { sendingWatchList } from "../../helpers/sendData";
+import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 import { ROUTES } from "../../Routes";
 
 const LittleMenuSection = () => {
@@ -107,7 +107,7 @@ const LittleMenuSection = () => {
                     {userInfo ? (
                       <button
                         onClick={() => {
-                          sendingWatchList(dispatch, each);
+                          sendingWatchList(dispatch, sendWishListData(each));
                         }}
                       >
                         Add to Cart
