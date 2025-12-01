@@ -4,7 +4,7 @@ import { UserInfoType } from "../../types";
 import { RootState } from "../store";
 
 interface InitialStateType {
-  userInfo: UserInfoType;
+  userInfo: UserInfoType | null;
 }
 
 const initialState: InitialStateType = {

@@ -8,7 +8,7 @@ import { RootState } from "../store";
 import { UserInfoType } from "../../types";
 
 interface ReservationSliceType {
-  userData: UserInfoType;
+  userData: UserInfoType | null;
   loading: boolean;
   error: string | null;
   initialValues: {

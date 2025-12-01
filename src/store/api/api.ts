@@ -35,9 +35,9 @@ const instant = axios.create({
   },
 });
 
-export function getLocalUserStrict(): UserInfoType {
-  let strSData = localStorage.getItem("userInfo");
-  if (!strSData) throw new Error("Not Logged In");
+export function getLocalUserStrict(): UserInfoType | null {
+  const strSData = localStorage.getItem("userInfo");
+  if (!strSData) return null;
   return JSON.parse(strSData);
 }
 
@@ -216,6 +216,9 @@ export const addingReserveTable = createAsyncThunk<
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       const response = await localStorageUsers
         .get<UserInfoType[]>("/")
         .then((res) => res.data);
@@ -257,6 +260,9 @@ export const deletingReservationTime = createAsyncThunk<
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       const { data } = await localStorageUsers.get<UserInfoType>(
         `/${userInfo.id}`
       );
@@ -283,6 +289,9 @@ export const updatingProfileInformation = createAsyncThunk<
   async (data, { rejectWithValue, dispatch }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       if (
         data.userOldPass === userInfo.password &&
         userInfo.password !== data.userNewPass
@@ -316,6 +325,9 @@ export const addingWishlistToData = createAsyncThunk<
   async (wishObj, { dispatch, rejectWithValue }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       const checkingExistingMeal = await localStorageUsers
         .get<UserInfoType>(`/${userInfo.id}`)
         .then((res) => res.data?.wishList || []);
@@ -358,6 +370,9 @@ export const deleteWishListFromData = createAsyncThunk<
   async (mealId, { dispatch, rejectWithValue }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       const response = await localStorageUsers
         .get<UserInfoType>(`/${userInfo.id}`)
         .then((res) => {
@@ -394,6 +409,9 @@ export const changingCountOfItem = createAsyncThunk<
   async ({ mealId, type }, { dispatch, rejectWithValue }) => {
     try {
       const userInfo = getLocalUserStrict();
+      if (!userInfo) {
+        return rejectWithValue("User not logged in");
+      }
       const response = await localStorageUsers
         .get<UserInfoType>(`/${userInfo.id}`)
         .then((res) => {
