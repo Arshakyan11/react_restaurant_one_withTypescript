@@ -18,7 +18,12 @@ import {
   UpdateDataOnProfileType,
 } from "../types/formTypes";
 import { NavigateFunction } from "react-router-dom";
-import { EdamamHitForWishListSedningType, WishList } from "../types";
+import {
+  EdamamHit,
+  EdamamHitForSearch,
+  EdamamHitForWishListSedningType,
+  WishList,
+} from "../types";
 
 export const createDataContact = (
   e: ContactFormValuesTypes,
@@ -105,3 +110,24 @@ export const sendWishListData = (
 export const sendingWatchList = (dispatch: AppDispatch, item: WishList) => {
   dispatch(addingWishlistToData(item));
 };
+
+export function spreedPropertiesWidely(elm: EdamamHitForSearch) {
+  return {
+    label: elm.recipe.label,
+    ingredients: elm.recipe.ingredients,
+    image: elm.recipe.images?.REGULAR.url,
+    calories: elm.recipe.calories,
+    totalWeight: elm.recipe.totalWeight,
+    cuisineType: elm.recipe.cuisineType,
+    dietLabels: elm.recipe.dietLabels,
+    mealType: elm.recipe.mealType,
+  };
+}
+
+export function spreedProperties(elm: EdamamHit) {
+  return {
+    label: elm.recipe.label,
+    ingredients: elm.recipe.ingredients,
+    image: elm.recipe.images?.REGULAR.url,
+  };
+}

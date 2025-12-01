@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosStatic } from "axios";
+import axios from "axios";
 import { notifyForError, notifyForSMth } from "../../helpers/notifyUser";
 import { ROUTES } from "../../Routes";
 import { setEmailManualy } from "../ProfileSlice/ProfileSlice";
@@ -22,6 +22,10 @@ import {
   UpdateDataOnProfileType,
 } from "../../types/formTypes";
 import { AppDispatch } from "../store";
+import {
+  spreedProperties,
+  spreedPropertiesWidely,
+} from "../../helpers/sendData";
 
 const instant = axios.create({
   timeoutErrorMessage: "Error 404",
@@ -30,27 +34,6 @@ const instant = axios.create({
     "Edamam-Account-User": "myrestaurant123",
   },
 });
-
-function spreedProperties(elm: EdamamHit) {
-  return {
-    label: elm.recipe.label,
-    ingredients: elm.recipe.ingredients,
-    image: elm.recipe.images?.REGULAR.url,
-  };
-}
-
-function spreedPropertiesWidely(elm: EdamamHitForSearch) {
-  return {
-    label: elm.recipe.label,
-    ingredients: elm.recipe.ingredients,
-    image: elm.recipe.images?.REGULAR.url,
-    calories: elm.recipe.calories,
-    totalWeight: elm.recipe.totalWeight,
-    cuisineType: elm.recipe.cuisineType,
-    dietLabels: elm.recipe.dietLabels,
-    mealType: elm.recipe.mealType,
-  };
-}
 
 function getLocalUserStrict(): UserInfoType {
   let strSData = localStorage.getItem("userInfo");
