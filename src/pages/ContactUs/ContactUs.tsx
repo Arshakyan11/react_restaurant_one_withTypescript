@@ -7,9 +7,12 @@ import { getAllData } from "../../store/ContactUsSlice/ContactUsSlice";
 import { contactUsValidation } from "../../helpers/useValidation";
 import Aos from "aos";
 import { createDataContact } from "../../helpers/sendData";
+import { AppDispatch, useAppDispatch, useAppSelector } from "../../store/store";
+
 const ContactUs = () => {
-  const dispatch = useDispatch();
-  const { initialValues } = useSelector(getAllData);
+  const dispatch = useAppDispatch();
+  const { initialValues } = useAppSelector(getAllData);
+
   useEffect(() => {
     Aos.init({ duration: 800 });
   }, []);
