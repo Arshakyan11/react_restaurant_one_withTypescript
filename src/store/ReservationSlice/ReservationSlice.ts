@@ -1,24 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { addingReserveTable, deletingReservationTime } from "../api/api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  addingReserveTable,
+  deletingReservationTime,
+  getLocalUserStrict,
+} from "../api/api";
+import { RootState } from "../store";
+import { UserInfoType } from "../../types";
+
+interface ReservationSliceType {
+  userData: UserInfoType;
+  loading: boolean;
+  error: string | null;
+  initialValues: {
+    address: string;
+    date: string;
+    count: string;
+    tableType: string;
+  };
+}
+const initialState: ReservationSliceType = {
+  userData: getLocalUserStrict(),
+  loading: false,
+  error: null,
+  initialValues: {
+    address: "",
+    date: "",
+    count: "",
+    tableType: "",
+  },
+};
 
 const ReservationSlice = createSlice({
   name: "reservation",
-  initialState: {
-    userData: JSON.parse(localStorage.getItem("userInfo")),
-    loading: false,
-    error: null,
-    initialValues: {
-      address: "",
-      date: "",
-      count: "",
-      tableType: "",
-    },
-  },
-  selectors: {
-    getAllReservationInfo: (state) => state,
-  },
+  initialState,
   reducers: {
-    setUserInfoManualy: (state, action) => {
+    setUserInfoManualy: (state, action: PayloadAction<UserInfoType>) => {
       state.userData = action.payload;
     },
   },
@@ -30,11 +46,11 @@ const ReservationSlice = createSlice({
     builder.addCase(addingReserveTable.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.userData = action.payload;
+      state.userData = action.payload ?? state.userData;
     });
     builder.addCase(addingReserveTable.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload ?? "Something went wrong!!";
     });
     builder.addCase(deletingReservationTime.pending, (state, action) => {
       state.loading = true;
@@ -47,11 +63,11 @@ const ReservationSlice = createSlice({
     });
     builder.addCase(deletingReservationTime.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload ?? "Something went wrong!!";
     });
   },
 });
 
 export default ReservationSlice.reducer;
 export const { setUserInfoManualy } = ReservationSlice.actions;
-export const { getAllReservationInfo } = ReservationSlice.selectors;
+export const getAllReservationInfo = (state: RootState) => state.reservation;

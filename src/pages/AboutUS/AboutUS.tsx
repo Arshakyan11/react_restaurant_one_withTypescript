@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./AboutUS.module.scss";
 import { ownerImg, pic2, pic3, pic4, pic5 } from "../../components/Images";
-import Aos from "aos";
+import Aos from "Aos";
 const AboutUS = () => {
   useEffect(() => {
     Aos.init({

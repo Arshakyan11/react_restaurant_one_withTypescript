@@ -1,17 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { changingCountOfItem } from "../api/api";
+import { RootState } from "../store";
+
+interface MiniBuyingListType {
+  isOpenModal: boolean;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: MiniBuyingListType = {
+  isOpenModal: false,
+  loading: false,
+  error: null,
+};
+
 const MiniBuyingList = createSlice({
   name: "miniBuyingList",
-  initialState: {
-    isOpenModal: false,
-    loading: false,
-    error: null,
-  },
-  selectors: {
-    getAllMiniBuyingListInfo: (state) => state,
-  },
+  initialState,
   reducers: {
-    setModalOpenType: (state, action) => {
+    setModalOpenType: (state, action: PayloadAction<boolean>) => {
       state.isOpenModal = action.payload;
     },
   },
@@ -26,11 +33,12 @@ const MiniBuyingList = createSlice({
     });
     builder.addCase(changingCountOfItem.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload ?? "Something went wrong!!";
     });
   },
 });
 
 export default MiniBuyingList.reducer;
 export const { setModalOpenType } = MiniBuyingList.actions;
-export const { getAllMiniBuyingListInfo } = MiniBuyingList.selectors;
+export const getAllMiniBuyingListInfo = (state: RootState) =>
+  state.miniBuyingList;

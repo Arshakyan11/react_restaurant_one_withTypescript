@@ -1,21 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchingGlobalMenu } from "../api/api";
+import { RootState } from "../store";
+import { DataOfSearchingMenuType } from "../../types";
+
+interface MenuSliceType {
+  selectedItems: DataOfSearchingMenuType[];
+  selectedParams: null | string;
+  isOpenFilterBox: boolean;
+  loading: boolean;
+  error: string | null;
+  filterActivated: boolean;
+  filteredData: DataOfSearchingMenuType[];
+  filterInfo: number[];
+}
+
+const initialState: MenuSliceType = {
+  selectedItems: [],
+  selectedParams: null,
+  isOpenFilterBox: true,
+  loading: false,
+  error: null,
+  filterActivated: false,
+  filteredData: [],
+  filterInfo: [],
+};
 
 const MenuSlice = createSlice({
   name: "menu",
-  initialState: {
-    selectedItems: [],
-    selectedParams: null,
-    isOpenFilterBox: true,
-    loading: false,
-    error: null,
-    filterActivated: false,
-    filteredData: [],
-    filterInfo: [],
-  },
-  selectors: {
-    getAllMenuInfo: (state) => state,
-  },
+  initialState,
   reducers: {
     setFilteredDataByPrice: (state, action) => {
       const { min, max, filterArg } = action.payload;
@@ -27,7 +39,7 @@ const MenuSlice = createSlice({
         state.filterInfo = [min, max];
         state.filterActivated = true;
         state.filteredData = state.selectedItems.filter(
-          (elm) => elm.recipe.price >= min && elm.recipe.price <= max
+          (elm) => +elm.price >= min && +elm.price <= max
         );
       }
     },
@@ -49,17 +61,17 @@ const MenuSlice = createSlice({
       if (state.filterActivated) {
         const [min, max] = state.filterInfo;
         state.filteredData = state.selectedItems.filter(
-          (elm) => elm.recipe.price >= min && elm.recipe.price <= max
+          (elm) => +elm.price >= min && +elm.price <= max
         );
       }
     });
     builder.addCase(fetchingGlobalMenu.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload ?? "Something went wrong!";
     });
   },
 });
 
 export default MenuSlice.reducer;
 export const { setFilteredDataByPrice, setFilterBoxStatus } = MenuSlice.actions;
-export const { getAllMenuInfo } = MenuSlice.selectors;
+export const getAllMenuInfo = (state: RootState) => state.menu;

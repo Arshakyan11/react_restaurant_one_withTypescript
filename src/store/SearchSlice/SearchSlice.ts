@@ -1,21 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchingSearchMenu } from "../api/api";
+import { RootState } from "../store";
+import { DataOfSearchingMenuType } from "../../types";
+
+interface SearchSliceType {
+  loading: boolean;
+  error: string | null;
+  foundedData: DataOfSearchingMenuType[];
+  queryByUser: null | string;
+}
+
+const initialState: SearchSliceType = {
+  foundedData: [],
+  queryByUser: null,
+  loading: false,
+  error: null,
+};
 
 const SearchSlice = createSlice({
   name: "searching",
-  initialState: {
-    foundedData: [],
-    queryByUser: [],
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     clearFoundedData: (state) => {
       state.foundedData = [];
     },
-  },
-  selectors: {
-    gettAllDataSearching: (state) => state,
   },
   extraReducers: (builder) => {
     builder.addCase(fetchingSearchMenu.pending, (state, action) => {
@@ -30,7 +38,7 @@ const SearchSlice = createSlice({
       state.queryByUser = rcvingData.queryName;
     });
     builder.addCase(fetchingSearchMenu.rejected, (state, action) => {
-      state.error = action.payload;
+      state.error = action.payload ?? "Something Went Wrong";
       state.loading = false;
     });
   },
@@ -38,4 +46,4 @@ const SearchSlice = createSlice({
 
 export default SearchSlice.reducer;
 export const { clearFoundedData } = SearchSlice.actions;
-export const { gettAllDataSearching } = SearchSlice.selectors;
+export const gettAllDataSearching = (state: RootState) => state.searching;

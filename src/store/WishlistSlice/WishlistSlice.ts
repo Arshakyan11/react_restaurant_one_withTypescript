@@ -1,18 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addingWishlistToData, deleteWishListFromData } from "../api/api";
+import { RootState } from "../store";
+import { WishList } from "../../types";
+
+interface WishlistSliceType {
+  wishlist: WishList[];
+  loading: boolean;
+  error: null | string;
+}
+
+const initialState: WishlistSliceType = {
+  wishlist: [],
+  loading: false,
+  error: null,
+};
 
 const WishlistSlice = createSlice({
   name: "wishlist",
-  initialState: {
-    wishlist: [],
-    loading: false,
-    error: null,
-  },
-  selectors: {
-    getallWatchlistInfo: (state) => state,
-  },
+  initialState,
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(addingWishlistToData.pending, (state, action) => {
+    builder.addCase(addingWishlistToData.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
@@ -23,11 +31,11 @@ const WishlistSlice = createSlice({
     });
     builder.addCase(addingWishlistToData.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload ?? "Something Went Wrong!!";
     });
     builder.addCase(deleteWishListFromData.pending, (state) => {
       state.loading = true;
-      state.error = false;
+      state.error = null;
     });
     builder.addCase(deleteWishListFromData.fulfilled, (state, action) => {
       state.wishlist = action.payload;
@@ -35,11 +43,11 @@ const WishlistSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteWishListFromData.rejected, (state, action) => {
-      state.error = action.payload;
+      state.error = action.payload ?? "Something Went Wrong!!";
       state.loading = false;
     });
   },
 });
 
 export default WishlistSlice.reducer;
-export const { getallWatchlistInfo } = WishlistSlice.selectors;
+export const getallWatchlistInfo = (state: RootState) => state.wishlist;

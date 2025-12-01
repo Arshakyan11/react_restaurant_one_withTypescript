@@ -35,7 +35,7 @@ const instant = axios.create({
   },
 });
 
-function getLocalUserStrict(): UserInfoType {
+export function getLocalUserStrict(): UserInfoType {
   let strSData = localStorage.getItem("userInfo");
   if (!strSData) throw new Error("Not Logged In");
   return JSON.parse(strSData);
@@ -101,7 +101,7 @@ export const fetchingSearchMenu = createAsyncThunk<
     );
     let response = res.data.hits;
     const finalResult: DataOfSearchingMenuType[] = response.map((elm) => ({
-      starrArr: [...Array(Math.round(Math.random() * 2 + 3))].map((i) => i + 1),
+      starrArr: [...Array(Math.round(Math.random() * 2 + 3))].map((_, i) => i + 1),
       price: (Math.random() * 55 + 2).toFixed(2),
       mealId: nanoid(4),
       ...spreedPropertiesWidely(elm),
@@ -124,7 +124,6 @@ export const fetchingGlobalMenu = createAsyncThunk<
     const res = await instant.get<{ hits: EdamamHitForSearch[] }>(
       `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&diet=balanced&app_id=${process.env.REACT_APP_FOODS_API_ID}&app_key=${process.env.REACT_APP_FOODS_API_KEY}`
     );
-
     let response = res.data.hits;
     const finalResult: DataOfSearchingMenuType[] = response.map((elm) => ({
       price: (Math.random() * 55 + 2).toFixed(2),
@@ -207,7 +206,7 @@ export const checkingUserExisting = createAsyncThunk<
 });
 
 export const addingReserveTable = createAsyncThunk<
-  { success: boolean; data?: UserInfoType },
+  UserInfoType,
   ReserveTableInfoType,
   { rejectValue: string; dispatch: AppDispatch }
 >(
@@ -232,12 +231,14 @@ export const addingReserveTable = createAsyncThunk<
         };
         setingLocalStorageUserinfo(dispatch, updatedData);
         notifyForSMth("Reservation passed Successfuly");
-        return { success: true, data: updatedData };
+        return updatedData;
       } else {
         notifyForError(
           "You have already had reservation, Go to Profile for concelation"
         );
-        return { success: false };
+        return rejectWithValue(
+          "You have already had reservation, go to Profile to cancel"
+        );
       }
     } catch (error) {
       return rejectWithValue("Error 404");
