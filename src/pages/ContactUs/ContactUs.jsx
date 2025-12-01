@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllData } from "../../store/ContactUsSlice/ContactUsSlice";
 import { contactUsValidation } from "../../helpers/useValidation";
-import Aos from "Aos";
+import Aos from "aos";
 import { createDataContact } from "../../helpers/sendData";
 const ContactUs = () => {
   const dispatch = useDispatch();

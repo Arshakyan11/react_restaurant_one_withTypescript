@@ -19,7 +19,7 @@ import { nanoid } from "nanoid";
 import {
   getAllPagination,
   setInfoAboutPagination,
-} from "../../store/PaginationSlice/paginationSlice";
+} from "../../store/PaginationSlice/PaginationSlice";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import Aos from "aos";
@@ -247,7 +247,10 @@ const Menu = () => {
                         {userInfo ? (
                           <button
                             onClick={() => {
-                              sendingWatchList(dispatch, sendWishListData(each));
+                              sendingWatchList(
+                                dispatch,
+                                sendWishListData(each)
+                              );
                             }}
                           >
                             Add to Cart

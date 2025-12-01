@@ -8,4 +8,4 @@ declare module "*.module.scss" {
   export default classes;
 }
 
-declare module "Aos";
+declare module "aos";

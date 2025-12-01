@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPagination,
   setCurrentPage,
-} from "../../store/PaginationSlice/paginationSlice";
+} from "../../store/PaginationSlice/PaginationSlice";
 
 const Pagination = ({ length }) => {
   const dispatch = useDispatch();
