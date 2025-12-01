@@ -101,7 +101,9 @@ export const fetchingSearchMenu = createAsyncThunk<
     );
     let response = res.data.hits;
     const finalResult: DataOfSearchingMenuType[] = response.map((elm) => ({
-      starrArr: [...Array(Math.round(Math.random() * 2 + 3))].map((_, i) => i + 1),
+      starrArr: [...Array(Math.round(Math.random() * 2 + 3))].map(
+        (_, i) => i + 1
+      ),
       price: (Math.random() * 55 + 2).toFixed(2),
       mealId: nanoid(4),
       ...spreedPropertiesWidely(elm),
