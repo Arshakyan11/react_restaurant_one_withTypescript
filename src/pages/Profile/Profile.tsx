@@ -1,8 +1,6 @@
-import React from "react";
 import styles from "./Profile.module.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { userDataEditing } from "../../helpers/useValidation";
-import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProfileInfo,
   setTypeOfChanginPass,
@@ -10,10 +8,11 @@ import {
 } from "../../store/ProfileSlice/ProfileSlice";
 import { updateDataOnProfile } from "../../helpers/sendData";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 const Profile = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { initialValues, isHiden, isHideemOld } =
-    useSelector(getAllProfileInfo);
+    useAppSelector(getAllProfileInfo);
   return (
     <div className={styles.profileSec}>
       <div className={styles.mainProfileSec}>
@@ -79,8 +78,8 @@ const Profile = () => {
               </p>
             </fieldset>
             <div className={styles.buttons}>
-              <button>Submit</button>
-              <button>Reset</button>
+              <button type="submit">Submit</button>
+              <button type="reset">Reset</button>
             </div>
           </Form>
         </Formik>

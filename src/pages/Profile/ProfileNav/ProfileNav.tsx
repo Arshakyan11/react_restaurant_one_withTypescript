@@ -1,14 +1,14 @@
 import React from "react";
 import "./ProfileNav.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavigateFunction, NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
 import { FaUser } from "react-icons/fa";
-import { LogOutFromAccount } from "../../../helpers/logOut.ts";
+import { LogOutFromAccount } from "../../../helpers/logOut";
 import { FaRightToBracket } from "react-icons/fa6";
+import { getLocalUserStrict } from "../../../store/api/api";
 const ProfileNav = () => {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || [];
-  const navigate = useNavigate();
-
+  const userInfo = getLocalUserStrict();
+  const navigate: NavigateFunction = useNavigate();
   return (
     <nav className="miniNav">
       <div className="miniNavSec">
@@ -16,11 +16,11 @@ const ProfileNav = () => {
           <FaUser />
           <p>
             Welcome back! <br />
-            {userInfo.userName ? userInfo.userName : null}
+            {userInfo?.userName}
           </p>
           <p>
             Phone <br />
-            {userInfo.phoneNumber ? userInfo.phoneNumber : null}
+            {userInfo?.phoneNumber}
           </p>
         </div>
         <div className="bottomSide">
