@@ -1,4 +1,4 @@
-import React, { HTMLInputTypeAttribute, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./Search.module.scss";
 import { gettAllDataSearching } from "../../store/SearchSlice/SearchSlice";
 import { searchHelper } from "../../helpers/searchHelper";
@@ -46,7 +46,7 @@ const Search = () => {
                   <div key={nanoid(5)} className={styles.eachMenu}>
                     <img
                       src={each.image}
-                      alt="image"
+                      alt="mainDataImg"
                       className={styles.mealImg}
                     />
                     <Link

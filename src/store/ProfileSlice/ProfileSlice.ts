@@ -3,7 +3,7 @@ import { getLocalUserStrict, updatingProfileInformation } from "../api/api";
 import { RootState } from "../store";
 const userInfo = getLocalUserStrict() || null;
 
-interface ProfileSlice {
+interface ProfileSliceType {
   isHiden: boolean;
   isHideemOld: boolean;
   error: null | string;
@@ -16,7 +16,7 @@ interface ProfileSlice {
   };
 }
 
-const initialState: ProfileSlice = {
+const initialState: ProfileSliceType = {
   isHiden: true,
   isHideemOld: true,
   error: null,

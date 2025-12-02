@@ -16,8 +16,25 @@
       "phoneNumber": "+37477112233",
       "email": "adminadmin@gmail.com",
       "password": "adminAdm123",
-      "wishList": [],
-      "totalCheckPrice": "0.000"
+      "wishList": [
+        {
+          "id": "8PDu",
+          "name": "Spicy Pineapple BBQ Sauce",
+          "price": "20.96",
+          "calories": 922.9756179749684,
+          "img": "https://edamam-product-images.s3.amazonaws.com/web-img/375/37518a4c2b8ea7f490db4116c27c3577.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLWVhc3QtMSJIMEYCIQDgr8NtdweSunt0NysYAFp2GCZIN2nxN%2BZWOOCJD2QDcQIhAJ4pbnV%2FgMLhGZN9iXlAf2nOmUrtdAVi%2BdokeukZsL8OKrgFCBUQABoMMTg3MDE3MTUwOTg2IgxXHseHxFP10FIH1swqlQWP8wonlkaqLQUE9O4sCM6z26%2Fq9omPlIcduJHrJEUm7%2BVXOU4goKyGT1IzPI5qjMoWGfbdGm9vxEisozTX4m0f9pMPt97aBC6lXBnoMJ5nPmbJOK18fDTvjBQyRqPjCazeEXIH3rUaZYuFIZI5o4TCUq2dtBXM8ezpPe25vr%2BLYWGFBQWVPZC91u3%2FrYoCUqejnyCig9lqXlHlD8U%2B4Cw2eiG6gqEvE1G2HEEGO%2Fg7OaImXwptg%2Fzl6VL%2F%2Bg5kOReKaN0P%2FyoEaalSyDxRwJyPJkVi%2FJHkQsyQIAGP6hVZnEKeSfAeEWsggsEZl9e6IY9JO3wJX3xwg7XcOdzkZ2mNt15Kn7Gpk2C8krSaxJeNoC2hhVFuBoxWdZcKB1%2Bj%2B7pCyCnBNU28h9U8Si38%2BcI3YsFxmzdgFbKfYHDUETVhrFQFOjKCusrTC3xBujU98QV%2BSQ65MEz4S6x%2FsF6qBL1Cblv4LyxdWuCxK2pELJmmHsFpo9GTibH3PptVtvGQtvvduWm82psP75Wwi8Ve4kM2VDRHN1z2qFxl1n3GaVuHsNez%2B7Lt0RryGy22SCFsZs2T8np4TCX8tQ802bsQ9If1xX6ENPSGu%2F1rgfZjXlo9QNxBZnyIwP6xBpa9k%2BURQHK%2FNEFtbRcNU%2F%2Fu%2Bt0%2Fp6CVBsULvgtKi%2BCZd6SI3lDTIHwpSxDoCBx3QGUxXNkdk9Uvxg4rF2N4qLJNXNduz%2FUnGofx%2FdMXoEizfoW8ynWDriJEMiWgCIC2CQkLIbI8bIbIFA4O%2Fw%2F28BEkzdEC6bNda3BfKt6L1lqgIaYLxx%2BCwdlRNFoCpB7HDmjQ0WgB%2B8jORtxOdabBN9UIiPo%2FKp7LhIwdACdHoaDgAXXlly3S8HtWm%2FHbMJeku8kGOrAB6eQEJmafLXN9fStqw%2BMRmhj9M93w%2BOL7eHeTmTx%2FgjqIxB1y7uG%2FuaUgRM3dfnWdcBFlQng07%2FIZDX2Jx8BH%2FJw7177y6wWV93vmllrD4YZdyUm73UjbCSN%2FjY8d8HKyiVcntuisrHBK0k%2F%2BQpWhQ%2FUMWCtE3uDKIoQVwCaLrlj3GeKAZSb3EnMQ4UFMn7arK%2FSw2iKiDXppGRTmS1i2NcVYIx8G0GCM%2BOT71GnczYo%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251202T153717Z&X-Amz-SignedHeaders=host&X-Amz-Credential=ASIASXCYXIIFFYEOYIW5%2F20251202%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=3600&X-Amz-Signature=39db1cb8b9f1db8104da5348162cfbf5164fe4a07c74952f8a9f585465b0aa05",
+          "count": 1
+        },
+        {
+          "id": "-igQ",
+          "name": "BBQ Chicken Quinoa Salad",
+          "price": "50.53",
+          "calories": 1459.8194316819365,
+          "img": "https://edamam-product-images.s3.amazonaws.com/web-img/ffd/ffd68082ca4e12b64c83f8539b528649.jpg?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEwaCXVzLWVhc3QtMSJIMEYCIQDgr8NtdweSunt0NysYAFp2GCZIN2nxN%2BZWOOCJD2QDcQIhAJ4pbnV%2FgMLhGZN9iXlAf2nOmUrtdAVi%2BdokeukZsL8OKrgFCBUQABoMMTg3MDE3MTUwOTg2IgxXHseHxFP10FIH1swqlQWP8wonlkaqLQUE9O4sCM6z26%2Fq9omPlIcduJHrJEUm7%2BVXOU4goKyGT1IzPI5qjMoWGfbdGm9vxEisozTX4m0f9pMPt97aBC6lXBnoMJ5nPmbJOK18fDTvjBQyRqPjCazeEXIH3rUaZYuFIZI5o4TCUq2dtBXM8ezpPe25vr%2BLYWGFBQWVPZC91u3%2FrYoCUqejnyCig9lqXlHlD8U%2B4Cw2eiG6gqEvE1G2HEEGO%2Fg7OaImXwptg%2Fzl6VL%2F%2Bg5kOReKaN0P%2FyoEaalSyDxRwJyPJkVi%2FJHkQsyQIAGP6hVZnEKeSfAeEWsggsEZl9e6IY9JO3wJX3xwg7XcOdzkZ2mNt15Kn7Gpk2C8krSaxJeNoC2hhVFuBoxWdZcKB1%2Bj%2B7pCyCnBNU28h9U8Si38%2BcI3YsFxmzdgFbKfYHDUETVhrFQFOjKCusrTC3xBujU98QV%2BSQ65MEz4S6x%2FsF6qBL1Cblv4LyxdWuCxK2pELJmmHsFpo9GTibH3PptVtvGQtvvduWm82psP75Wwi8Ve4kM2VDRHN1z2qFxl1n3GaVuHsNez%2B7Lt0RryGy22SCFsZs2T8np4TCX8tQ802bsQ9If1xX6ENPSGu%2F1rgfZjXlo9QNxBZnyIwP6xBpa9k%2BURQHK%2FNEFtbRcNU%2F%2Fu%2Bt0%2Fp6CVBsULvgtKi%2BCZd6SI3lDTIHwpSxDoCBx3QGUxXNkdk9Uvxg4rF2N4qLJNXNduz%2FUnGofx%2FdMXoEizfoW8ynWDriJEMiWgCIC2CQkLIbI8bIbIFA4O%2Fw%2F28BEkzdEC6bNda3BfKt6L1lqgIaYLxx%2BCwdlRNFoCpB7HDmjQ0WgB%2B8jORtxOdabBN9UIiPo%2FKp7LhIwdACdHoaDgAXXlly3S8HtWm%2FHbMJeku8kGOrAB6eQEJmafLXN9fStqw%2BMRmhj9M93w%2BOL7eHeTmTx%2FgjqIxB1y7uG%2FuaUgRM3dfnWdcBFlQng07%2FIZDX2Jx8BH%2FJw7177y6wWV93vmllrD4YZdyUm73UjbCSN%2FjY8d8HKyiVcntuisrHBK0k%2F%2BQpWhQ%2FUMWCtE3uDKIoQVwCaLrlj3GeKAZSb3EnMQ4UFMn7arK%2FSw2iKiDXppGRTmS1i2NcVYIx8G0GCM%2BOT71GnczYo%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251202T153717Z&X-Amz-SignedHeaders=host&X-Amz-Credential=ASIASXCYXIIFFYEOYIW5%2F20251202%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=3600&X-Amz-Signature=3a6245f4fee9830c3aeeb14b8bbf6cb3435af2eca3b2f3a7e1747ef1a52313f8",
+          "count": 1
+        }
+      ],
+      "totalCheckPrice": "71.490"
     }
   ]
 }

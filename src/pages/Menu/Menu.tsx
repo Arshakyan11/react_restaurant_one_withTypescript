@@ -77,7 +77,7 @@ const Menu = () => {
     });
   };
   const handleMenuChoosing = (query: string) => {
-    if (query != selectedParams) {
+    if (query !== selectedParams) {
       dispatch(fetchingGlobalMenu(query));
       goToTop();
     }

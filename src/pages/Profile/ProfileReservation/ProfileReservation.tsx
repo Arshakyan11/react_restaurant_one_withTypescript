@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styles from "./ProfileReservation.module.scss";
 import { reserveDate } from "../../../components/Images";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
 import { deletingReservationTime } from "../../../store/api/api";
 import Aos from "aos";

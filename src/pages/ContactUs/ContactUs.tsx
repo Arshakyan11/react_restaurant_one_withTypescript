@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import "aos/dist/aos.css";
 import styles from "./ContactUs.module.scss";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import { getAllData } from "../../store/ContactUsSlice/ContactUsSlice";
 import { contactUsValidation } from "../../helpers/useValidation";
 import Aos from "aos";
 import { createDataContact } from "../../helpers/sendData";
-import { AppDispatch, useAppDispatch, useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 const ContactUs = () => {
   const dispatch = useAppDispatch();

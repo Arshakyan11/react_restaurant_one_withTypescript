@@ -1,5 +1,4 @@
 import "./Pagination.scss";
-import { nanoid } from "nanoid";
 import {
   getAllPagination,
   setCurrentPage,
@@ -22,7 +21,7 @@ const Pagination = ({ length }: PaginationPropsType) => {
     <section className="pagination">
       <div className="buttons">
         <button
-          disabled={currentPage == 1}
+          disabled={currentPage === 1}
           onClick={() => dispatch(setCurrentPage(currentPage - 1))}
         >
           {"<"}
@@ -30,7 +29,7 @@ const Pagination = ({ length }: PaginationPropsType) => {
         {pages.map((elm) => {
           return (
             <button
-              className={currentPage == elm ? "activePage" : "normal"}
+              className={currentPage === elm ? "activePage" : "normal"}
               key={elm}
               onClick={() => dispatch(setCurrentPage(elm))}
             >
@@ -39,7 +38,7 @@ const Pagination = ({ length }: PaginationPropsType) => {
           );
         })}
         <button
-          disabled={currentPage == Math.ceil(length / postsPerPage)}
+          disabled={currentPage === Math.ceil(length / postsPerPage)}
           onClick={() => dispatch(setCurrentPage(currentPage + 1))}
         >
           {">"}
