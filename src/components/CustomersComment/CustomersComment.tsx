@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { starRating } from "../Images";
 import { customerReview } from "../../data/customerData";
 import {

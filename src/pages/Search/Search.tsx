@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { HTMLInputTypeAttribute, useEffect } from "react";
 import styles from "./Search.module.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { gettAllDataSearching } from "../../store/SearchSlice/SearchSlice";
 import { searchHelper } from "../../helpers/searchHelper";
 import { FaSearch } from "react-icons/fa";
@@ -12,13 +11,15 @@ import Aos from "aos";
 import { notifyForError } from "../../helpers/notifyUser";
 import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 import BuyingItemsList from "../../components/BuyingItemsList/BuyingItemsList";
+import { getLocalUserStrict } from "../../store/api/api";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 const Search = () => {
-  const dispatch = useDispatch();
-  const { foundedData, loading } = useSelector(gettAllDataSearching);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const dispatch = useAppDispatch();
+  const { foundedData, loading } = useAppSelector(gettAllDataSearching);
+  const userInfo = getLocalUserStrict();
   useEffect(() => {
     Aos.init({ duration: 800 });
-  });
+  }, []);
   return (
     <section className={styles.searching}>
       <div className={styles.container}>
@@ -28,7 +29,7 @@ const Search = () => {
             <input
               type="text"
               placeholder="Search Meals..."
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 searchHelper(dispatch, e);
               }}
             />
@@ -40,19 +41,18 @@ const Search = () => {
                 <span className={styles.loader}></span>
               </div>
             ) : foundedData.length > 1 ? (
-              foundedData?.map((elm) => {
-                const each = elm.recipe;
+              foundedData?.map((each) => {
                 return (
                   <div key={nanoid(5)} className={styles.eachMenu}>
                     <img
-                      src={each.images?.REGULAR.url}
-                      alt=""
+                      src={each.image}
+                      alt="image"
                       className={styles.mealImg}
                     />
                     <Link
                       className={styles.infoMore}
                       to={`/${ROUTES.MENU}/eachProduct/${each.label}`}
-                      state={{ data: elm }}
+                      state={{ data: each }}
                     >
                       More Info
                     </Link>
@@ -89,7 +89,14 @@ const Search = () => {
                             onClick={() => {
                               sendingWatchList(
                                 dispatch,
-                                sendWishListData(each)
+                                sendWishListData({
+                                  mealId: each.mealId,
+                                  label: each.label,
+                                  price: each.price,
+                                  calories: each.calories,
+                                  image: each.image,
+                                  count: 1,
+                                })
                               );
                             }}
                           >

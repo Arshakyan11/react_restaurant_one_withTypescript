@@ -1,16 +1,19 @@
-import React from "react";
 import "./Pagination.scss";
 import { nanoid } from "nanoid";
-import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPagination,
   setCurrentPage,
 } from "../../store/PaginationSlice/PaginationSlice";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
-const Pagination = ({ length }) => {
-  const dispatch = useDispatch();
-  const { currentPage, postsPerPage } = useSelector(getAllPagination);
-  const pages = Array.from(
+interface PaginationPropsType {
+  length: number;
+}
+
+const Pagination = ({ length }: PaginationPropsType) => {
+  const dispatch = useAppDispatch();
+  const { currentPage, postsPerPage } = useAppSelector(getAllPagination);
+  const pages: number[] = Array.from(
     { length: postsPerPage > 1 ? Math.ceil(length / postsPerPage) : 0 },
     (_, i) => i + 1
   );
@@ -28,7 +31,7 @@ const Pagination = ({ length }) => {
           return (
             <button
               className={currentPage == elm ? "activePage" : "normal"}
-              key={nanoid(3)}
+              key={elm}
               onClick={() => dispatch(setCurrentPage(elm))}
             >
               {elm}

@@ -43,7 +43,7 @@ const HeaderCuisine = () => {
       >
         {cuisines.map((elm, index) => {
           return (
-            <SwiperSlide className="eachCuisine">
+            <SwiperSlide className="eachCuisine" key={index}>
               <div className="leftSide">
                 <p className="restaurants">Restaurant </p>
                 <p className="cusisineType">

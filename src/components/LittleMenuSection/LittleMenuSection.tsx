@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styles from "./LittleMenuSection.module.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchingLittleMenu } from "../../store/api/api";
 import {
   gettAllInfo,
@@ -17,14 +16,30 @@ import Aos from "aos";
 import { notifyForError } from "../../helpers/notifyUser";
 import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 import { ROUTES } from "../../Routes";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { DataOflittleMenuType } from "../../types";
 
 const LittleMenuSection = () => {
-  const dispatch = useDispatch();
-  const { data, loading, activeCategory } = useSelector(gettAllInfo);
-  const { slicedData } = useSelector(getAllPagination);
+  const dispatch = useAppDispatch();
+  const { data, loading, activeCategory } = useAppSelector(gettAllInfo);
+  const { slicedData } = useAppSelector(getAllPagination) as {
+    slicedData: DataOflittleMenuType[];
+  };
   const userInfo = localStorage.getItem("userInfo");
-  const categories = ["BBQ", "pizza", "sushi", "desserts top", "coffee drink"];
-  const buttonNames = ["All Category", "Dinner", "Lunch", "Dessert", "Drink"];
+  const categories: string[] = [
+    "BBQ",
+    "pizza",
+    "sushi",
+    "desserts top",
+    "coffee drink",
+  ];
+  const buttonNames: string[] = [
+    "All Category",
+    "Dinner",
+    "Lunch",
+    "Dessert",
+    "Drink",
+  ];
   useEffect(() => {
     dispatch(fetchingLittleMenu("BBQ"));
     dispatch(setActiveCategory("BBQ"));
@@ -41,7 +56,7 @@ const LittleMenuSection = () => {
     );
   }, [data]);
 
-  const handleClick = (type) => {
+  const handleClick = (type: string) => {
     if (type !== activeCategory) {
       dispatch(fetchingLittleMenu(type));
       dispatch(setActiveCategory(type));
@@ -107,7 +122,17 @@ const LittleMenuSection = () => {
                     {userInfo ? (
                       <button
                         onClick={() => {
-                          sendingWatchList(dispatch, sendWishListData(each));
+                          sendingWatchList(
+                            dispatch,
+                            sendWishListData({
+                              mealId: each.mealId,
+                              label: each.label,
+                              price: each.price,
+                              calories: each.calories,
+                              image: each.image,
+                              count: 1,
+                            })
+                          );
                         }}
                       >
                         Add to Cart

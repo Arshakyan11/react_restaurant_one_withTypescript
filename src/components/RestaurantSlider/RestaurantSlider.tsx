@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { nanoid } from "nanoid";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,8 +8,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import "./RestaurantSlider.scss";
-const RestaurantSlider = ({ imagesArr }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+import type { Swiper as SwiperType } from "swiper";
+interface RestaurantSliderType {
+  imagesArr: [string, string, string, string];
+}
+const RestaurantSlider = ({ imagesArr }: RestaurantSliderType) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   return (
     <div className="allSwipers">
       <div className="firstSwiper">

@@ -1,12 +1,11 @@
-import React from "react";
 import "./Footer.scss";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { ROUTES } from "../../Routes";
-import { useSelector } from "react-redux";
 import { getAllReservationInfo } from "../../store/ReservationSlice/ReservationSlice";
+import { useAppSelector } from "../../store/store";
 const Footer = () => {
-  const { userData } = useSelector(getAllReservationInfo);
+  const { userData } = useAppSelector(getAllReservationInfo);
   return (
     <section className="footerSec">
       <div className="container">

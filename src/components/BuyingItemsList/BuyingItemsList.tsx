@@ -12,25 +12,29 @@ import {
   deleteWishListFromData,
 } from "../../store/api/api";
 import { getUserInfo } from "../../store/AuthSlice/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 const BuyingItemsList = () => {
-  const dispatch = useDispatch();
-  const { isOpenModal } = useSelector(getAllMiniBuyingListInfo);
-  const { userInfo } = useSelector(getUserInfo);
-  const modalRef = useRef();
+  const dispatch = useAppDispatch();
+  const { isOpenModal } = useAppSelector(getAllMiniBuyingListInfo);
+  const { userInfo } = useAppSelector(getUserInfo);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node;
       if (
         modalRef.current &&
-        !modalRef.current.contains(event.target) &&
+        !modalRef.current.contains(target) &&
         isOpenModal
       ) {
         dispatch(setModalOpenType(false));
       }
     };
     document.addEventListener("click", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [isOpenModal, dispatch]);
 
@@ -58,7 +62,7 @@ const BuyingItemsList = () => {
                   {userInfo.wishList.map((elm, ind) => {
                     return (
                       <div className="eachItem" key={ind}>
-                        <img src={elm.img} alt="" />
+                        <img src={elm.img} alt="image" />
                         <div className="infoOfItem">
                           <p>{elm.name.slice(0, 30)}</p>
                           <p>{elm.price}$</p>
@@ -114,9 +118,7 @@ const BuyingItemsList = () => {
             </div>
           </div>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 };
