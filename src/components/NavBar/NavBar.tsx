@@ -1,20 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./NavBar.scss";
 import { logo } from "../Images";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavigateFunction,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import { FaAddressCard, FaBars, FaUser } from "react-icons/fa";
 import { FaRightToBracket } from "react-icons/fa6";
-import { LogOutFromAccount } from "../../helpers/logOut.ts";
+import { LogOutFromAccount } from "../../helpers/logOut";
+import { getLocalUserStrict } from "../../store/api/api";
 
 const NavBar = () => {
-  const dropDownRef = useRef();
-  const dropDownRefBottom = useRef();
-  const navigate = useNavigate();
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [isDropDownOpenBottom, setIsDropDownOpenBottom] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const dropDownRef = useRef<HTMLLIElement>(null);
+  const dropDownRefBottom = useRef<HTMLLIElement>(null);
+  const navigate: NavigateFunction = useNavigate();
+  const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
+  const [isDropDownOpenBottom, setIsDropDownOpenBottom] =
+    useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
   const toogleDropDown = () => {
     setIsDropDownOpen(!isDropDownOpen);
   };
@@ -22,28 +30,31 @@ const NavBar = () => {
     setIsDropDownOpenBottom(!isDropDownOpenBottom);
   };
 
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = getLocalUserStrict();
   useEffect(() => {
     const handleScreenSize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleScreenSize);
-    const handleOffingDrop = (event) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+    const handleOffingDrop = (event: TouchEvent | MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (dropDownRef.current && !dropDownRef.current.contains(target)) {
         setIsDropDownOpen(false);
       }
       if (
         dropDownRefBottom.current &&
-        !dropDownRefBottom.current.contains(event.target)
+        !dropDownRefBottom.current.contains(target)
       ) {
         setIsDropDownOpenBottom(false);
       }
     };
     document.addEventListener("mousedown", handleOffingDrop);
+    document.addEventListener("touchend", handleOffingDrop);
     return () => {
       document.removeEventListener("mousedown", handleOffingDrop);
+      document.removeEventListener("touchend", handleOffingDrop);
       window.removeEventListener("resize", handleScreenSize);
     };
   }, []);
-  const pathname = useLocation();
+  const { pathname } = useLocation();
   useEffect(() => {
     setIsOpen(false);
     setIsDropDownOpen(false);
