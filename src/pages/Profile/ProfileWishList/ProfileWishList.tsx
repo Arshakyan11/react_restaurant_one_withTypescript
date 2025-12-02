@@ -3,7 +3,6 @@ import styles from "./ProfileWishList.module.scss";
 import {
   changingCountOfItem,
   deleteWishListFromData,
-  getLocalUserStrict,
 } from "../../../store/api/api";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
@@ -11,6 +10,7 @@ import { burgerProfile } from "../../../components/Images";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import { getUserInfo, setUserInfo } from "../../../store/AuthSlice/AuthSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
+import ProfileNotLogedMesComponent from "../../../components/ProfileNotLogedMesComponent/ProfileNotLogedMesComponent";
 const ProfileWishList = () => {
   const { userInfo } = useAppSelector(getUserInfo);
   const dispatch = useAppDispatch();
@@ -19,13 +19,9 @@ const ProfileWishList = () => {
       setUserInfo(userInfo);
     }
   }, [userInfo]);
+
   if (!userInfo) {
-    return (
-      <div className={styles.notFoundAnyItem}>
-        <h2>User not found. Please log in first.</h2>
-        <Link to={`/${ROUTES.LOGIN}`}>Go to Login</Link>
-      </div>
-    );
+    return <ProfileNotLogedMesComponent />;
   }
   return (
     <div className={styles.wishListSec}>

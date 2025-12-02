@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import styles from ".//App.module.scss";
+import "./App.scss";
 import LayOut from "./LayOut/LayOut";
 import { ROUTES } from "./Routes";
 import { Bounce, ToastContainer } from "react-toastify";

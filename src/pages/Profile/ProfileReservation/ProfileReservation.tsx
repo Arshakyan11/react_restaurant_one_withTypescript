@@ -1,22 +1,25 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./ProfileReservation.module.scss";
 import { reserveDate } from "../../../components/Images";
-import { Link } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
-import { useDispatch, useSelector } from "react-redux";
 import { deletingReservationTime } from "../../../store/api/api";
 import Aos from "aos";
 import { getUserInfo } from "../../../store/AuthSlice/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
+import ProfileNotLogedMesComponent from "../../../components/ProfileNotLogedMesComponent/ProfileNotLogedMesComponent";
 
 const ProfileReservation = () => {
-  const { userInfo } = useSelector(getUserInfo);
-  const isTrue = userInfo?.reservation ? true : false;
-  const date = userInfo?.reservation?.date.split("T");
-
-  const dispatch = useDispatch();
+  const { userInfo } = useAppSelector(getUserInfo);
+  const isTrue = !!userInfo?.reservation;
+  const date = userInfo?.reservation?.date?.split("T");
+  const dispatch = useAppDispatch();
   useEffect(() => {
     Aos.init({ duration: 800 });
-  });
+  }, []);
+  if (!userInfo) {
+    return <ProfileNotLogedMesComponent />;
+  }
   return (
     <div className={styles.reserveDate}>
       <div className={styles.header}>
@@ -35,23 +38,23 @@ const ProfileReservation = () => {
           <div className={styles.reserveMainInfo}>
             <div className={styles.eachLine}>
               <p>Address:</p>
-              <p>{userInfo.reservation.address}</p>
+              <p>{userInfo.reservation?.address}</p>
             </div>
             <div className={styles.eachLine}>
               <p>Date:</p>
-              <p>{date[0]}</p>
+              <p>{date?.[0]}</p>
             </div>
             <div className={styles.eachLine}>
               <p>Time:</p>
-              <p>{date[1]}</p>
+              <p>{date?.[1]}</p>
             </div>
             <div className={styles.eachLine}>
               <p>Number of Guests:</p>
-              <p>{userInfo.reservation.count} people</p>
+              <p>{userInfo.reservation?.count} people</p>
             </div>
             <div className={styles.eachLine}>
               <p>Table Experience:</p>
-              <p>{userInfo.reservation.tableType}</p>
+              <p>{userInfo.reservation?.tableType}</p>
             </div>
             <div className={styles.eachLine}>
               <p>Reservation Status:</p>

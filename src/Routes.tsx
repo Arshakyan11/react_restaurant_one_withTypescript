@@ -16,4 +16,3 @@ export const ROUTES = {
   NOTFOUND: "*",
 } as const;
 
-type RouteValues = (typeof ROUTES)[keyof typeof ROUTES];
