@@ -9,3 +9,8 @@ declare module "*.module.scss" {
 }
 
 declare module "aos";
+declare module "*.png";
+declare module "*.webp";
+declare module "*.jpg";
+declare module "*.avif";
+declare module "*.jpeg";
