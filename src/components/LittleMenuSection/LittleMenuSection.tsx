@@ -44,7 +44,7 @@ const LittleMenuSection = () => {
     dispatch(fetchingLittleMenu("BBQ"));
     dispatch(setActiveCategory("BBQ"));
     Aos.init({ duration: 800 });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(
@@ -54,7 +54,7 @@ const LittleMenuSection = () => {
         currentPage: 1,
       })
     );
-  }, [data]);
+  }, [data, dispatch]);
 
   const handleClick = (type: string) => {
     if (type !== activeCategory) {

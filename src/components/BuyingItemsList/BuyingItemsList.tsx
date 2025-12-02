@@ -39,7 +39,7 @@ const BuyingItemsList = () => {
 
   useEffect(() => {
     dispatch(setModalOpenType(false));
-  }, []);
+  }, [dispatch]);
   if (!userInfo) return null;
   return (
     <div className="allItems">

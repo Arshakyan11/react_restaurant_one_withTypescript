@@ -53,7 +53,7 @@ const Menu = () => {
   useEffect(() => {
     dispatch(fetchingGlobalMenu("BreakFast"));
     Aos.init({ duration: 800 });
-  }, []);
+  }, [dispatch]);
   useEffect(() => {
     if (window.innerWidth <= 690) {
       dispatch(setFilterBoxStatus(false));
@@ -67,7 +67,7 @@ const Menu = () => {
       })
     );
     // }
-  }, [selectedItems]);
+  }, [selectedItems, dispatch]);
 
   const goToTop = () => {
     if (!h3Ref.current) return;

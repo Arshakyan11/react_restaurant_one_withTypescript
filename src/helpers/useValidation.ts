@@ -10,7 +10,7 @@ export const contactUsValidation = object({
     .max(10, "Write less than  10 symbols")
     .required("Pls write your LastName"),
   email: string()
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
+    .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
     .required("Pls write Your Email"),
   subject: string()
     .min(3, "Write  Subject more symbols")
@@ -33,7 +33,7 @@ export const userRegistrationValidation = object({
     .matches(/^\+[0-9]{11}$/, "Pls enter valid phone Number")
     .required("Pls write Your phone Number"),
   email: string()
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
+    .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
     .required("Pls write Your Email"),
   password: string()
     .min(6, "Write Minimum 6 symbols")
@@ -50,7 +50,7 @@ export type UserRegistrationValidationType = InferType<
 
 export const userLoginValidation = object({
   email: string()
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
+    .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
     .required("Pls write Your Email"),
   password: string()
     .min(6, "Write Minimum 6 symbols")
@@ -78,7 +78,7 @@ export type UserReservationValidationType = InferType<
 
 export const userDataEditing = object({
   userEmail: string()
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
+    .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, "Pls enter valid email")
     .required("Pls write Your Email"),
   userOldPass: string().required("Pls Write Your Old Password"),
   userNewPass: string()
