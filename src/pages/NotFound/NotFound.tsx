@@ -9,7 +9,7 @@ const NotFound = () => {
         <div className={styles.notFoundMainSec}>
           <div className={styles.eachLine}>
             <h2>404</h2>
-            <span class={styles.loader}></span>
+            <span className={styles.loader}></span>
           </div>
           <p>
             It looks like the page you’re searching for doesn’t exist — maybe

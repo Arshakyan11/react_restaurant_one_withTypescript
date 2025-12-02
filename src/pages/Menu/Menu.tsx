@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./Menu.module.scss";
 import Pagination from "../../components/Pagination/Pagination";
 import {
@@ -7,7 +7,6 @@ import {
   priceRanges,
   topCategories,
 } from "../../data/menuData";
-import { useDispatch, useSelector } from "react-redux";
 import {
   getAllMenuInfo,
   setFilterBoxStatus,
@@ -26,9 +25,11 @@ import Aos from "aos";
 import { notifyForError } from "../../helpers/notifyUser";
 import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
 import BuyingItemsList from "../../components/BuyingItemsList/BuyingItemsList";
-
+import { DataOfSearchingMenuType } from "../../types/apiHandlingTypes";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { FilteringMenu } from "../../types";
 const Menu = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     selectedItems,
     selectedParams,
@@ -37,15 +38,17 @@ const Menu = () => {
     filteredData,
     isOpenFilterBox,
     filterInfo,
-  } = useSelector(getAllMenuInfo);
+  } = useAppSelector(getAllMenuInfo);
 
-  const isPriceSelected = (min, max) => {
+  const isPriceSelected = (min: number, max: number) => {
     return filterActivated && filterInfo[0] === min && filterInfo[1] === max;
   };
-  const { slicedData } = useSelector(getAllPagination);
-  const displayData = filterActivated ? filteredData : slicedData;
+  const { slicedData } = useAppSelector(getAllPagination);
+  const displayData = filterActivated
+    ? filteredData
+    : (slicedData as DataOfSearchingMenuType[]);
   const userInfo = localStorage.getItem("userInfo");
-  const h3Ref = useRef();
+  const h3Ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     dispatch(fetchingGlobalMenu("BreakFast"));
@@ -67,19 +70,24 @@ const Menu = () => {
   }, [selectedItems]);
 
   const goToTop = () => {
+    if (!h3Ref.current) return;
     window.scrollTo({
       top: h3Ref.current.offsetTop - 100,
       behavior: "smooth",
     });
   };
-  const handleMenuChoosing = (query) => {
+  const handleMenuChoosing = (query: string) => {
     if (query != selectedParams) {
       dispatch(fetchingGlobalMenu(query));
       goToTop();
     }
   };
 
-  const handleFilteringData = (min, max, filterArg = true) => {
+  const handleFilteringData = ({
+    min,
+    max,
+    filterArg = true,
+  }: FilteringMenu) => {
     dispatch(setFilteredDataByPrice({ min, max, filterArg }));
     goToTop();
   };
@@ -177,14 +185,25 @@ const Menu = () => {
                                 : ""
                             }
                             onClick={() =>
-                              handleFilteringData(elm.min, elm.max)
+                              handleFilteringData({
+                                min: elm.min,
+                                max: elm.max,
+                              })
                             }
                           >
                             {elm.label}
                           </li>
                         );
                       })}
-                      <li onClick={() => handleFilteringData(0, 1000, false)}>
+                      <li
+                        onClick={() =>
+                          handleFilteringData({
+                            min: 0,
+                            max: 1000,
+                            filterArg: false,
+                          })
+                        }
+                      >
                         Remove the price filter
                       </li>
                     </ul>
@@ -211,19 +230,18 @@ const Menu = () => {
             ) : (
               <div className={styles.menuBox}>
                 <div className={styles.allMenuIngredients}>
-                  {displayData?.map((elm) => {
-                    const each = elm.recipe;
+                  {displayData?.map((each) => {
                     return (
                       <div key={nanoid(4)} className={styles.eachMenu}>
                         <img
-                          src={each.images?.REGULAR.url}
+                          src={each.image}
                           alt="img"
                           className={styles.mealImg}
                         />
                         <Link
                           className={styles.infoMore}
                           to={`/${ROUTES.MENU}/eachProduct/${each.label}`}
-                          state={{ data: elm }}
+                          state={{ data: each }}
                         >
                           More Info
                         </Link>
@@ -240,7 +258,7 @@ const Menu = () => {
                             <p> {each.price}$</p>
                           </div>
                           <div className={styles.onlyWeight}>
-                            <p>{each.totalWeight.toFixed(1)}g</p>
+                            <p>{each.totalWeight?.toFixed(1)}g</p>
                             <p>Weight</p>
                           </div>
                         </div>
@@ -249,7 +267,14 @@ const Menu = () => {
                             onClick={() => {
                               sendingWatchList(
                                 dispatch,
-                                sendWishListData(each)
+                                sendWishListData({
+                                  mealId: each.mealId,
+                                  label: each.label,
+                                  price: each.price,
+                                  calories: each.calories,
+                                  image: each.image,
+                                  count: 1,
+                                })
                               );
                             }}
                           >

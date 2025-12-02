@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sliceDataForPage } from "../../helpers/sliceData";
 import { RootState } from "../store";
-import { DataOflittleMenuType } from "../../types";
+import { DataOflittleMenuType, DataOfSearchingMenuType } from "../../types";
 
 interface PaginationDataRcvingType {
-  data: DataOflittleMenuType[];
+  data: DataOflittleMenuType[] | DataOfSearchingMenuType[];
   postsPerPage: number;
   currentPage: number;
 }
@@ -12,8 +12,8 @@ interface PaginationDataRcvingType {
 interface PagionationSliceType {
   postsPerPage: number;
   currentPage: number;
-  dataRcving: DataOflittleMenuType[];
-  slicedData: DataOflittleMenuType[];
+  dataRcving: DataOfSearchingMenuType[] | DataOflittleMenuType[];
+  slicedData: DataOfSearchingMenuType[] | DataOflittleMenuType[];
 }
 
 const initialState: PagionationSliceType = {

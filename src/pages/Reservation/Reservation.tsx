@@ -3,7 +3,6 @@ import styles from "./Reservation.module.scss";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import { getAllReservationInfo } from "../../store/ReservationSlice/ReservationSlice";
 import { reserveTableInfo } from "../../helpers/sendData";
 import { FaArrowDown } from "react-icons/fa6";
@@ -12,13 +11,15 @@ import LineInfo from "../../components/LineInfo/LineInfo";
 import { restInfo1, restInfo2, restInfo3 } from "../../components/Images";
 import Aos from "aos";
 import { getCurrentTime } from "../../helpers/createTime";
+import { getLocalUserStrict } from "../../store/api/api";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 const Reservation = () => {
   useEffect(() => {
     Aos.init({ duration: 800 });
   }, []);
-  const dispatch = useDispatch();
-  const { initialValues } = useSelector(getAllReservationInfo);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const dispatch = useAppDispatch();
+  const { initialValues } = useAppSelector(getAllReservationInfo);
+  const userInfo = getLocalUserStrict();
   return (
     <section className={styles.resSec}>
       <div className={styles.container}>
@@ -48,7 +49,11 @@ const Reservation = () => {
                         <ErrorMessage name="address" component="div" />
                       </legend>
                       <FaArrowDown />
-                      <Field name="address" as="select" className={styles.firstInput}>
+                      <Field
+                        name="address"
+                        as="select"
+                        className={styles.firstInput}
+                      >
                         <option value="" hidden>
                           Select Restaurnat Address
                         </option>
@@ -85,14 +90,14 @@ const Reservation = () => {
                       <Field
                         name="count"
                         placeholder="Number of Guests"
-                        type="string"
+                        type="number"
                         min={1}
                         max={24}
                       />
                     </fieldset>
                     <fieldset>
                       <legend>
-                        <ErrorMessage name="tableType" component="tableType" />
+                        <ErrorMessage name="tableType" component="div" />
                       </legend>
                       <FaArrowDown />
                       <Field name="tableType" as="select">

@@ -39,3 +39,9 @@ export interface priceChangesType {
   min: number;
   max: number;
 }
+
+export interface FilteringMenu {
+  min: number;
+  max: number;
+  filterArg?: boolean;
+}

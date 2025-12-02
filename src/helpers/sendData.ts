@@ -103,7 +103,7 @@ export const sendWishListData = (
   name: item.label,
   price: item.price,
   calories: item.calories,
-  img: item.images.REGULAR.url,
+  img: item.image,
   count: 1,
 });
 
@@ -129,5 +129,6 @@ export function spreedProperties(elm: EdamamHit) {
     label: elm.recipe.label,
     ingredients: elm.recipe.ingredients,
     image: elm.recipe.images?.REGULAR.url,
+    calories: elm.recipe.calories,
   };
 }

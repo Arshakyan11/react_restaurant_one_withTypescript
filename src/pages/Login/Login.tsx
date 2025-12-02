@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Login.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,11 @@ import { userLoginValidation } from "../../helpers/useValidation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { checkUserSendingData } from "../../helpers/sendData";
 import { loginPic, loginPic2 } from "../../components/Images";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isHidenPASS, initialValues } = useSelector(getAllLoginInfo);
+  const dispatch = useAppDispatch();
+  const navigate: NavigateFunction = useNavigate();
+  const { isHidenPASS, initialValues } = useAppSelector(getAllLoginInfo);
 
   return (
     <section className={styles.navBox}>
@@ -40,9 +41,7 @@ const Login = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={userLoginValidation}
-              onSubmit={(e, form) =>
-                checkUserSendingData(e, form, dispatch, navigate)
-              }
+              onSubmit={(e) => checkUserSendingData(e, dispatch, navigate)}
             >
               <Form>
                 <fieldset>

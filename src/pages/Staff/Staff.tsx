@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./Staff.module.scss";
 import { restaurantChefs } from "../../data/chiefsData";
 import Aos from "aos";
 const Staff = () => {
   useEffect(() => {
     Aos.init({ duration: 800 });
-  });
+  }, []);
   return (
     <section className={styles.chiefsS}>
       <div className={styles.container}>

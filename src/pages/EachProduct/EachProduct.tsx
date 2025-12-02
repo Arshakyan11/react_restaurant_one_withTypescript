@@ -1,22 +1,24 @@
-import React from "react";
 import styles from "./EachProduct.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../Routes";
 import { FaCartShopping } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
 import { notifyForError } from "../../helpers/notifyUser";
 import { sendingWatchList, sendWishListData } from "../../helpers/sendData";
+import { useAppDispatch } from "../../store/store";
+import { DataOfSearchingMenuType } from "../../types";
 const EachProduct = () => {
-  const { data } = useLocation().state;
+  const { state } = useLocation() as {
+    state: { data: DataOfSearchingMenuType };
+  };
   const userInfo = localStorage.getItem("userInfo");
-  const mealObj = data.recipe;
-  const dispatch = useDispatch();
+  const mealObj = state.data;
+  const dispatch = useAppDispatch();
   return (
     <section className={styles.eachMealSec}>
       <div className={styles.container}>
         <div className={styles.eachProduct}>
           <div className={styles.leftSection}>
-            <img src={mealObj.images?.REGULAR.url} alt="mealImg" />
+            <img src={mealObj.image} alt="mealImg" />
             <div className={styles.infoSecMiddle}>
               <p className={styles.ingredientsTitle}>Ingredients:</p>
               <div className={styles.ingredients}>
@@ -60,7 +62,17 @@ const EachProduct = () => {
               {userInfo ? (
                 <button
                   onClick={() => {
-                    sendingWatchList(dispatch, sendWishListData(mealObj));
+                    sendingWatchList(
+                      dispatch,
+                      sendWishListData({
+                        mealId: mealObj.mealId,
+                        label: mealObj.label,
+                        price: mealObj.price,
+                        calories: mealObj.calories,
+                        image: mealObj.image,
+                        count: 1,
+                      })
+                    );
                   }}
                 >
                   Order Now <FaCartShopping />

@@ -41,7 +41,6 @@ const OurRestourants = () => {
                   </div>
                   <div className={styles.infoEachLine}>
                     <FaClock />
-                    {/* <FaEnvelope /> */}
                     <p>{elm.workingTime}</p>
                   </div>
                 </div>

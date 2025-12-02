@@ -1,8 +1,9 @@
 export interface EdamamHit {
   recipe: {
     label: string;
-    ingredients: string[];
-    images?: {
+    calories: number;
+    ingredients: IngredientsType[];
+    images: {
       REGULAR: {
         url: string;
       };
@@ -20,13 +21,25 @@ export interface EdamamHitForSearch extends EdamamHit {
   };
 }
 
+interface IngredientsType {
+  food: string;
+  foodCategory: string;
+  foodId: string;
+  image: string;
+  measure: string;
+  quantity: number;
+  text: string;
+  weight: number;
+}
 export interface DataOflittleMenuType {
+  mealId: string;
   label: string;
-  ingredients: string[];
+  ingredients: IngredientsType[];
   price: string;
   starrArr: number[];
-  mealId: string;
-  image?: string;
+  image: string;
+  totalWeight?: number;
+  calories: number;
 }
 
 export interface EdamamHitForWishListSedningType {
@@ -35,11 +48,7 @@ export interface EdamamHitForWishListSedningType {
   price: string;
   calories: number;
   count: number;
-  images: {
-    REGULAR: {
-      url: string;
-    };
-  };
+  image: string;
 }
 
 export type DataOfSearchingMenuType = Pick<

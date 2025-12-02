@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchingGlobalMenu } from "../api/api";
 import { RootState } from "../store";
 import { DataOfSearchingMenuType } from "../../types";
@@ -43,7 +43,7 @@ const MenuSlice = createSlice({
         );
       }
     },
-    setFilterBoxStatus: (state, action) => {
+    setFilterBoxStatus: (state, action: PayloadAction<boolean>) => {
       state.isOpenFilterBox = action.payload;
     },
   },
