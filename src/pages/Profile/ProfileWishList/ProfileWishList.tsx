@@ -1,27 +1,38 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./ProfileWishList.module.scss";
-import { useDispatch, useSelector } from "react-redux";
 import {
   changingCountOfItem,
   deleteWishListFromData,
+  getLocalUserStrict,
 } from "../../../store/api/api";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../Routes";
 import { burgerProfile } from "../../../components/Images";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import { getUserInfo, setUserInfo } from "../../../store/AuthSlice/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
 const ProfileWishList = () => {
-  const { userInfo } = useSelector(getUserInfo);
-  const dispatch = useDispatch();
+  const { userInfo } = useAppSelector(getUserInfo);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
-  }, []);
+    if (userInfo) {
+      setUserInfo(userInfo);
+    }
+  }, [userInfo]);
+  if (!userInfo) {
+    return (
+      <div className={styles.notFoundAnyItem}>
+        <h2>User not found. Please log in first.</h2>
+        <Link to={`/${ROUTES.LOGIN}`}>Go to Login</Link>
+      </div>
+    );
+  }
   return (
     <div className={styles.wishListSec}>
       <div className={styles.wishedItems}>
         {userInfo.wishList?.length > 0 ? (
           <div className={styles.allWishedItemsOnly}>
-            {userInfo?.wishList?.map((elm, ind) => {
+            {userInfo.wishList.map((elm, ind) => {
               return (
                 <div className={styles.wishedItemEach} key={ind}>
                   <img src={elm.img} alt="img" className={styles.mealImg} />

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import ProfileNav from "../ProfileNav/ProfileNav";
 import styles from "./ProfileLayOut.module.scss";
